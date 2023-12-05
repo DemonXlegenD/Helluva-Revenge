@@ -11,7 +11,7 @@ Slider::Slider()
 	bar.setFillColor(sf::Color::Magenta);
 	cursorText.setFillColor(sf::Color::White);
 	titleText.setFillColor(sf::Color::White);
-	cursor.setFillColor(sf::Color(0, 100, 0));
+	cursor.setFillColor(sf::Color(127, 0, 255));
 	cursor.setOutlineThickness(3);
 	cursor.setOutlineColor(sf::Color::White);
 	percent = 0.f;

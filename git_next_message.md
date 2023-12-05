@@ -1,4 +1,4 @@
-NEW : Main Menu
+ENH : Fade In Fade Out
 
-- Création du Main Menu
+- Création d'animation Fade In et Fade Out
 
