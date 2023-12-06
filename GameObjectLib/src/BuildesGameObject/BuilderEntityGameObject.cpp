@@ -45,6 +45,8 @@ GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string
 
 	InputCharacter* inputCharacter = gameObject->CreateComponent<InputCharacter>();
 
+	RigidBody2D* rigidBody = gameObject->CreateComponent<RigidBody2D>();
+
 	/*HealthPointBar* healthPointBar = gameObject->CreateComponent<HealthPointBar>();
 	healthPointBar->SetHealthPoint(player->GetHealthPoint());
 	healthPointBar->SetMaxHealthPoint(player->GetMaxHealthPoint());
