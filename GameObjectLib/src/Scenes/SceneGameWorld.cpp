@@ -12,16 +12,18 @@ void SceneGameWorld::Preload()
 	SceneGameAbstract::Preload();
 	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "../Assets/worldMapBackground.png");
 	AssetManager::AddAsset("BackgroundMapWorld", "../Assets/worldMap1.png");
+	AssetManager::AddAsset("Map", "../Assets/MapHelluvaRevenge.png");
 }
 
 void SceneGameWorld::Create()
 {
 	SceneGameAbstract::Create();
-	GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", 3200, WindowManager::GetWindowHeight() / 2, 0.8f, 0.8f, AssetManager::GetAsset("BackgroundMapBackgroundWorld"));
-	GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", 3200, WindowManager::GetWindowHeight() / 2, 0.8f, 0.8f, AssetManager::GetAsset("BackgroundMapWorld"));
+	//GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", 3200, WindowManager::GetWindowHeight() / 2, 0.8f, 0.8f, AssetManager::GetAsset("BackgroundMapBackgroundWorld"));
+	//GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", 3200, WindowManager::GetWindowHeight() / 2, 0.8f, 0.8f, AssetManager::GetAsset("BackgroundMapWorld"));
+	GameObject* Map = BuilderGameObject::CreateBackgroundGameObject("Map", 5100, WindowManager::GetWindowHeight() / 1.4f, 0.8f, 0.8f, AssetManager::GetAsset("Map"));
 	//this->CreateSceneButtonsMenu();
 	this->CreateChartacter();
-	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.2, 5, 2);
+	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, 2000, 100, 0.5f);
 	this->CreateSceneBackgroundOption();
 	this->CreatePauseMenuButtons();
 	this->CreatePlatformCollision();
@@ -30,7 +32,7 @@ void SceneGameWorld::Create()
 void SceneGameWorld::CreatePlatformCollision()
 {
 	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform1", 10, 782, 1.4f, 0.5f));
-	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform2", 215, 834, 0.15f, 0.5f));
+	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform2", 215, 734, 0.15f, 0.5f));
 	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform3", 235, 910, 0.70f, 0.5f));
 	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform4", 166, 870, 0.1f, 1.1f));
 	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform5", 320, 885, 0.15f, 0.5f));
@@ -112,5 +114,21 @@ void SceneGameWorld::Update(const float& _delta)
 {
 	SceneGameAbstract::Update(_delta);
 
-	CheckCollision();
+	//CheckCollision();
+	if (player && plateform)
+	{
+		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())) && firstCollide)
+		{
+			player->GetComponent<RigidBody2D>()->SetIsGravity(false);
+			player->GetComponent<Character>()->SetOnFloor(true);
+			firstCollide = false;
+		}
+		else if (!RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())))
+		{
+			firstCollide = true;
+			player->GetComponent<RigidBody2D>()->SetIsGravity(true);
+			player->GetComponent<Character>()->SetOnFloor(false);
+		}
+	}
+
 }
