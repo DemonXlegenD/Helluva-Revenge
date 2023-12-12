@@ -70,7 +70,7 @@ void SceneGameAbstract::CreatePauseMenuButtons()
 
 void SceneGameAbstract::CreateChartacter()
 {
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, AssetManager::GetAsset("Character"), 7.f, 7.f);
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", 100, 600, AssetManager::GetAsset("Character"), 7.f, 7.f);
 }
 
 void SceneGameAbstract::CreateSceneBackgroundOption() {

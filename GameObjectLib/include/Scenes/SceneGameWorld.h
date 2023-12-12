@@ -19,6 +19,7 @@ public:
 	void Delete() override;
 
 	void CreatePlatformCollision();
+	void CheckCollision();
 
 	void CreateSceneButtonsMenu();
 
@@ -32,6 +33,7 @@ private:
 
 	std::vector<GameObject*> platformCarreCollision;
 	std::vector<GameObject*> platformTriangleCollision;
+
 	GameObject* plateform = nullptr;
 
 };
