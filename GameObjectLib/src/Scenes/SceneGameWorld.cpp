@@ -12,6 +12,7 @@ void SceneGameWorld::Preload()
 	SceneGameAbstract::Preload();
 	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "../Assets/worldMapBackground.png");
 	AssetManager::AddAsset("BackgroundMapWorld", "../Assets/worldMap1.png");
+	AssetManager::AddAsset("idleEnemyA", "../Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-idle");
 }
 
 void SceneGameWorld::Create()
@@ -21,6 +22,7 @@ void SceneGameWorld::Create()
 	//GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapWorld"));
 	//this->CreateSceneButtonsMenu();
 	this->CreateChartacter();
+	this->CreateEnemy();
 	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.2, 5, 2);
 	this->CreateSceneBackgroundOption();
 	this->CreatePauseMenuButtons();
@@ -72,6 +74,11 @@ void SceneGameWorld::CreateSceneButtonsMenu()
 {
 	creditsButton = BuilderGameObject::CreateButtonGameObject("Crédits", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 13, 20);
 	backButton = BuilderGameObject::CreateButtonGameObject("Retourrrrrrrrrrrr", WindowManager::GetWindowWidth() / 2.1, WindowManager::GetWindowHeight() / 13, 25);
+}
+
+void SceneGameWorld::CreateEnemy()
+{
+	enemy = BuilderEntityGameObject::CreateEnemyAGameObject("EnemyA", WindowManager::GetWindowWidth() / 2, 70.f, 7.f, 7.f, AssetManager::GetAsset("idleEnemyA"));
 }
 
 void SceneGameWorld::Delete()

@@ -10,6 +10,7 @@
 #include "Components/ComponentsGame/Gun.h"
 #include "Components/Entity/Character.h"
 #include "Components/Inputs/InputCharacter.h"
+#include "Components/Entity/Enemy/EnemyA.h"
 
 #include <Components/Shapes/Rectangle.h>
 #include <Components/Shapes/Triangle.h>
@@ -198,6 +199,42 @@ GameObject* BuilderEntityGameObject::CreatePlateformGameObject(const std::string
 	Rectangle* rectangle = gameObject->CreateComponent<Rectangle>();
 	rectangle->SetSize(200.f, 50.f);
 	rectangle->SetScale(_scalex, _scaley);
+
+	return gameObject;
+}
+
+GameObject* BuilderEntityGameObject::CreateEnemyAGameObject(const std::string& _name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+
+	EnemyA* enemy = gameObject->CreateComponent<EnemyA>();
+
+	/*Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
+	spriteBody->SetName("body");
+	spriteBody->SetTexture(_texture);
+	spriteBody->SetScale(scalex, scaley);
+	spriteBody->SetSprite();*/
+
+	Animation* idle = gameObject->CreateComponent<Animation>();
+	idle->SetLoop(-1);
+	idle->SetName("idle");
+	idle->SetFrame(10);
+	idle->SetAnimationTime(1);
+	idle->SetSpriteSheet(AssetManager::GetAsset("idleEnemyA"));
+
+	/*SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
+	squareCollider->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
+	squareCollider->SetScale(scalex, scaley);
+
+	HealthPointBar* healthPointBar = gameObject->CreateComponent<HealthPointBar>();
+	healthPointBar->SetHealthPoint(enemy->GetHealthPoint());
+	healthPointBar->SetMaxHealthPoint(enemy->GetMaxHealthPoint());
+	healthPointBar->SetAboveSprite(25);
+	healthPointBar->SetSize(25, 2);
+	healthPointBar->SetScale(2.f, 2.f);
+	healthPointBar->SetHealthPointBar();*/
+	//enemies.push_back(gameObject);
 
 	return gameObject;
 }

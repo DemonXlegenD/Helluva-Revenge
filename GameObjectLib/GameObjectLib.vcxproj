@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Components\Entity\EnemyAbstract.h" />
+    <ClInclude Include="include\Components\Entity\Enemy\EnemyA.h" />
     <ClInclude Include="include\Components\ComponentsGame\WeaponsContainer.h" />
     <ClInclude Include="include\BuildersGameObject\BuilderShapeGameObject.h" />
     <ClInclude Include="include\Components\Animation.h" />
@@ -66,13 +68,15 @@
     <ClInclude Include="include\Scenes\SceneGameUnderground.h" />
     <ClInclude Include="include\Components\RigidBody2D.h" />
     <ClInclude Include="include\Components\Transform.h" />
-	  <ClInclude Include="include\Components\Shapes\Triangle.h" />
+    <ClInclude Include="include\Components\Shapes\Triangle.h" />
     <ClInclude Include="include\Scenes\ScenesGame\ScenesTest.h" />
     <ClInclude Include="include\Scenes\ScenesGame\Rectangle.h" />
     <ClInclude Include="include\Components\ComponentsGame\Weapon.h" />
     <ClInclude Include="include\Components\ComponentsGame\Sword.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\Entity\EnemyAbstract.cpp" />
+    <ClCompile Include="src\Components\Entity\Enemy\EnemyA.cpp" />
     <ClCompile Include="src\Components\ComponentsGame\WeaponsContainer.cpp" />
     <ClCompile Include="src\Components\Shapes\Rectangle.cpp" />
     <ClCompile Include="src\Scenes\ScenesGame\ScenesTest.cpp" />
