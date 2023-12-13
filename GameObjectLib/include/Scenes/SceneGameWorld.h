@@ -13,11 +13,6 @@ class SceneGameWorld : public SceneGameAbstract
 {
 public:
 	SceneGameWorld(const std::string& _newName);
-	void CreatePlatformCollision();
-
-	void CreateSceneButtonsMenu();
-
-	void CreateEnemy();
 
 	void Preload() override;
 	void Create() override;
