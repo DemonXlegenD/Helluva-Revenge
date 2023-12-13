@@ -207,21 +207,31 @@ GameObject* BuilderEntityGameObject::CreateEnemyAGameObject(const std::string& _
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
 	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+	gameObject->SetDepth(0.9f);
 
 	EnemyA* enemy = gameObject->CreateComponent<EnemyA>();
 
-	/*Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
-	spriteBody->SetName("body");
+	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
+	spriteBody->SetName("bodyEnemyA");
 	spriteBody->SetTexture(_texture);
 	spriteBody->SetScale(scalex, scaley);
-	spriteBody->SetSprite();*/
+	spriteBody->SetSprite();
 
 	Animation* idle = gameObject->CreateComponent<Animation>();
 	idle->SetLoop(-1);
-	idle->SetName("idle");
-	idle->SetFrame(10);
+	idle->SetName("idleEnemy");
+	idle->SetFrame(6);
 	idle->SetAnimationTime(1);
 	idle->SetSpriteSheet(AssetManager::GetAsset("idleEnemyA"));
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(true);
+	rigidBody2D->SetSize(spriteBody->GetBounds().x, spriteBody->GetBounds().y);
+	rigidBody2D->SetKillImperfection(Maths::Vector2f(8.f, 8.f));
+	rigidBody2D->SetScale(scalex, scaley);
+
+
+	idle->Play();
 
 	/*SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
 	squareCollider->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
@@ -235,6 +245,8 @@ GameObject* BuilderEntityGameObject::CreateEnemyAGameObject(const std::string& _
 	healthPointBar->SetScale(2.f, 2.f);
 	healthPointBar->SetHealthPointBar();*/
 	//enemies.push_back(gameObject);
+
+	enemy->AddAnimation("idleEnemy", idle);
 
 	return gameObject;
 }

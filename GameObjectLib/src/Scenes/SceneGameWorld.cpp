@@ -12,7 +12,7 @@ void SceneGameWorld::Preload()
 	SceneGameAbstract::Preload();
 	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "../Assets/worldMapBackground.png");
 	AssetManager::AddAsset("BackgroundMapWorld", "../Assets/worldMap1.png");
-	AssetManager::AddAsset("idleEnemyA", "../Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-idle");
+	AssetManager::AddAsset("idleEnemyA", "../Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-idle.png");
 }
 
 void SceneGameWorld::Create()
@@ -78,7 +78,7 @@ void SceneGameWorld::CreateSceneButtonsMenu()
 
 void SceneGameWorld::CreateEnemy()
 {
-	enemy = BuilderEntityGameObject::CreateEnemyAGameObject("EnemyA", WindowManager::GetWindowWidth() / 2, 70.f, 7.f, 7.f, AssetManager::GetAsset("idleEnemyA"));
+	enemy = BuilderEntityGameObject::CreateEnemyAGameObject("EnemyA", WindowManager::GetWindowWidth() / 1.7, 90.f, 7.f, 7.f, AssetManager::GetAsset("idleEnemyA"));
 }
 
 void SceneGameWorld::Delete()
@@ -92,23 +92,29 @@ void SceneGameWorld::Render(sf::RenderWindow* _window)
 	_window->draw(isPause ? backgroundAlpha2.backgroundAlpha : backgroundAlpha1.backgroundAlpha);
 }
 
+void SceneGameWorld::CollisionPlateforme(GameObject* _entity)
+{
+	if (_entity && plateform)
+	{
+		if (RigidBody2D::IsColliding(*(_entity->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())))
+		{
+			_entity->GetComponent<RigidBody2D>()->SetIsGravity(false);
+			_entity->GetComponent<Entity>()->SetOnFloor(true);
+			firstCollide = false;
+		}
+		else if (!RigidBody2D::IsColliding(*(_entity->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())))
+		{
+			firstCollide = true;
+			_entity->GetComponent<RigidBody2D>()->SetIsGravity(true);
+			_entity->GetComponent<Entity>()->SetOnFloor(false);
+		}
+	}
+}
+
 void SceneGameWorld::Update(const float& _delta)
 {
 	SceneGameAbstract::Update(_delta);
-	if (player && plateform)
-	{
-		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())) && firstCollide)
-		{
-			player->GetComponent<RigidBody2D>()->SetIsGravity(false);
-			player->GetComponent<Character>()->SetOnFloor(true);
-			firstCollide = false;
-		}
-		else if (!RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(plateform->GetComponent<RigidBody2D>())))
-		{
-			firstCollide = true;
-			player->GetComponent<RigidBody2D>()->SetIsGravity(true);
-			player->GetComponent<Character>()->SetOnFloor(false);
-		}
-	}
 
+	this->CollisionPlateforme(player);
+	this->CollisionPlateforme(enemy);
 }

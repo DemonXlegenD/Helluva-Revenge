@@ -23,6 +23,8 @@ public:
 	void CreateSceneButtonsMenu();
 
 	void CreateEnemy();
+	
+	void CollisionPlateforme(GameObject* _entity);
 
 	void Render(sf::RenderWindow* _window) override;
 	void Update(const float& _delta) override;
@@ -34,7 +36,7 @@ private:
 
 	std::vector<GameObject*> platformCarreCollision;
 	std::vector<GameObject*> platformTriangleCollision;
-	GameObject* enemy;
+	GameObject* enemy = nullptr;
 	GameObject* plateform = nullptr;
 
 };
