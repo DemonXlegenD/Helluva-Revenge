@@ -9,24 +9,25 @@ SceneGameWorld::SceneGameWorld(const std::string& _newName) : SceneGameAbstract(
 
 void SceneGameWorld::Preload()
 {
-	SceneGameAbstract::Preload();
 	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "../Assets/worldMapBackground.png");
 	AssetManager::AddAsset("BackgroundMapWorld", "../Assets/worldMap1.png");
 	AssetManager::AddAsset("idleEnemyA", "../Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-idle");
+	SceneGameAbstract::Preload();
+	
 }
 
 void SceneGameWorld::Create()
 {
+	//this->CreateSceneButtonsMenu();
+	this->CreateSceneBackgroundOption();
+	this->CreatePauseMenuButtons();
+	this->CreatePlatformCollision();
 	this->CreateChartacter();
 	this->CreateEnemy();
 	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.2, 5, 2);
 	SceneGameAbstract::Create();
 	//GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapBackgroundWorld"));
 	//GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapWorld"));
-	//this->CreateSceneButtonsMenu();
-	this->CreateSceneBackgroundOption();
-	this->CreatePauseMenuButtons();
-	this->CreatePlatformCollision();
 }
 
 void SceneGameWorld::CreatePlatformCollision()

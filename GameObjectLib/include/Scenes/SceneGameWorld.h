@@ -13,6 +13,11 @@ class SceneGameWorld : public SceneGameAbstract
 {
 public:
 	SceneGameWorld(const std::string& _newName);
+	void CreatePlatformCollision();
+
+	void CreateSceneButtonsMenu();
+
+	void CreateEnemy();
 
 	void Preload() override;
 	void Create() override;
@@ -21,12 +26,6 @@ public:
 
 	void Render(sf::RenderWindow* _window) override;
 	void Update(const float& _delta) override;
-
-	void CreatePlatformCollision();
-
-	void CreateSceneButtonsMenu();
-
-	void CreateEnemy();
 
 private:
 	sf::VertexArray triangle;
