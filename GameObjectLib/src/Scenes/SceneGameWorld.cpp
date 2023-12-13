@@ -17,13 +17,13 @@ void SceneGameWorld::Preload()
 
 void SceneGameWorld::Create()
 {
+	this->CreateChartacter();
+	this->CreateEnemy();
+	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.2, 5, 2);
 	SceneGameAbstract::Create();
 	//GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapBackgroundWorld"));
 	//GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, AssetManager::GetAsset("BackgroundMapWorld"));
 	//this->CreateSceneButtonsMenu();
-	this->CreateChartacter();
-	this->CreateEnemy();
-	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 1.2, 5, 2);
 	this->CreateSceneBackgroundOption();
 	this->CreatePauseMenuButtons();
 	this->CreatePlatformCollision();
