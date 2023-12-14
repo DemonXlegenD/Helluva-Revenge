@@ -3,6 +3,7 @@
 
 #include "BuildersGameObject/BuilderEntityGameObject.h"
 #include "Components/Entity/Character.h"
+#include "Components/Entity/Enemy/EnemyA.h"
 
 
 SceneGameWorld::SceneGameWorld(const std::string& _newName) : SceneGameAbstract(_newName) {}
@@ -73,6 +74,12 @@ void SceneGameWorld::CreateEnemy()
 	enemy = BuilderEntityGameObject::CreateEnemyAGameObject("EnemyA", WindowManager::GetWindowWidth() / 2, 40.f, 7.f, 7.f, AssetManager::GetAsset("idleEnemyA"));
 }
 
+void SceneGameWorld::CreateRengeEnemy()
+{
+	rengePosition = BuilderEntityGameObject::CreatePlateformGameObject("RengePosition", 8.f, 5.f, enemy->GetPosition().GetX(), enemy->GetPosition().GetY());
+	rengeProjectil = BuilderEntityGameObject::CreatePlateformGameObject("RengeProjectil", 4.f, 5.f, enemy->GetPosition().GetX(), enemy->GetPosition().GetY());
+}
+
 void SceneGameWorld::Delete()
 {
 	Scene::Delete();
@@ -82,6 +89,24 @@ void SceneGameWorld::Render(sf::RenderWindow* _window)
 {
 	Scene::Render(_window);
 	_window->draw(isPause ? backgroundAlpha2.backgroundAlpha : backgroundAlpha1.backgroundAlpha);
+}
+
+void SceneGameWorld::CollisionRenge(const float& _delta) {
+	if (player && rengePosition)
+	{
+		if (RigidBody2D::IsLeft(*(player->GetComponent<RigidBody2D>()), *(rengePosition->GetComponent<RigidBody2D>())))
+		{
+			EnemyA* enemyA = enemy->GetComponent<EnemyA>();
+			RigidBody2D* rigidBody2D = enemy->GetComponent<RigidBody2D>();
+			if (rigidBody2D->GetVelocity().GetX() > -enemyA->GetMaxSpeed()) rigidBody2D->AddForces(Maths::Vector2f::Left * _delta * enemyA->GetSpeed());
+		}
+		else if (!RigidBody2D::IsRight(*(player->GetComponent<RigidBody2D>()), *(rengePosition->GetComponent<RigidBody2D>())))
+		{
+			EnemyA* enemyA = enemy->GetComponent<EnemyA>();
+			RigidBody2D* rigidBody2D = enemy->GetComponent<RigidBody2D>();
+			if (rigidBody2D->GetVelocity().GetX() > -enemyA->GetMaxSpeed()) rigidBody2D->AddForces(Maths::Vector2f::Right * _delta * enemyA->GetSpeed());
+		}
+	}
 }
 
 void SceneGameWorld::Collision(GameObject* _entity)

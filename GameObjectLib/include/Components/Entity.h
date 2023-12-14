@@ -7,6 +7,7 @@ class Entity : public Component
 public:
 	Entity();
 	explicit Entity(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range);
+	enum Direction { Left, Right };
 
 	inline int GetHealthPoint() const { return healthPoint; }
 	inline int GetMaxHealthPoint() const { return maxHealthPoint; }
@@ -39,6 +40,7 @@ public:
 
 	inline bool GetOnFloor() const { return onFloor; }
 	inline void SetOnFloor(const bool& _state) { onFloor = _state; }
+	void SetDirection(Direction _newDirection);
 
 	void AddAnimation(const std::string& _name, Animation* animation);
 	Animation* GetAnimation(const std::string& _name);
@@ -61,4 +63,5 @@ protected:
 	bool onFloor = true;
 	Animation* actualAnimation = nullptr;
 	std::map<std::string, Animation*> animations;
+	Direction direction;
 };
