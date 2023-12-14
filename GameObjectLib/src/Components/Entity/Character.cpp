@@ -17,23 +17,6 @@ Character::Character(int _hp, int _damage, const float& _speed, const float& _at
 	direction = Direction::Right;
 }
 
-//void Character::SetDirection(Direction _newDirection) {
-//
-//		direction = _newDirection;
-//		if (direction == Direction::Left)
-//		{
-//            for (Sprite* sprite : GetOwner()->GetComponentsByType<Sprite>()) {
-//                if(sprite) sprite->SetScale(-1 * GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
-//            }
-//		}
-//		else if (direction == Direction::Right)
-//		{
-//            for (Sprite* sprite : GetOwner()->GetComponentsByType<Sprite>()) {
-//                if (sprite) sprite->SetScale(GetOwner()->GetScale().GetX(), GetOwner()->GetScale().GetY());
-//            }
-//		}
-//}
-
 void Character::Update(const float& _delta)
 {
     Entity::Update( _delta);
