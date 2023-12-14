@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Component.h"
+#include "Components/Animation.h"
+
 class Bullet : public Component
 {
 public:
@@ -19,10 +21,18 @@ public:
 	float GetDamageReduced() const;
 	float GetDamageReduced(Maths::Vector2f& _currentPosition) const;
 
+	void AddAnimation(const std::string& _name, Animation* animation);
+	Animation* GetAnimation(const std::string& _name);
+	Animation* GetAndSetAnimation(const std::string& _name);
+	inline Animation* GetActualAnimation() const { return actualAnimation; }
+	inline void SetActualAnimation(Animation* animation) { actualAnimation = animation; }
+
 private:
 	float damage = 20.f;
 	float reductionFactor = 0.01f;
 	float speed = 330.f;
 	Maths::Vector2f initialPosition = Maths::Vector2f::Zero;
+	std::map<std::string, Animation*> animations;
+	Animation* actualAnimation = nullptr;
 };
 

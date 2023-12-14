@@ -14,6 +14,9 @@ void SceneGameWorld::Preload()
 	AssetManager::AddAsset("BackgroundMapBackgroundWorld", "../Assets/Graphics/Maps/worldMapBackground.png");
 	AssetManager::AddAsset("BackgroundMapWorld", "../Assets/Graphics/Maps/worldMap1.png");
 	AssetManager::AddAsset("idleEnemyA", "../Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-idle.png");
+	AssetManager::AddAsset("shootEnemyA", "../Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-breath.png");
+	AssetManager::AddAsset("shootEnemyA", "../Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-breath.png");
+	AssetManager::AddAsset("FireBallEnemy", "../Assets/Enemy/Hell-Beast-Files/PNG/fire-ball.png");
 }
 
 void SceneGameWorld::Create()
@@ -70,14 +73,13 @@ void SceneGameWorld::CreatePlatformCollision()
 
 void SceneGameWorld::CreateEnemy()
 {
-	std::cout << "okk";
 	enemy = BuilderEntityGameObject::CreateEnemyAGameObject("EnemyA", WindowManager::GetWindowWidth() / 2, 40.f, 7.f, 7.f, AssetManager::GetAsset("idleEnemyA"));
 }
 
 void SceneGameWorld::CreateRengeEnemy()
 {
-	rengePosition = BuilderEntityGameObject::CreatePlateformGameObject("RengePosition", 8.f, 5.f, enemy->GetPosition().GetX(), enemy->GetPosition().GetY());
-	rengeProjectil = BuilderEntityGameObject::CreatePlateformGameObject("RengeProjectil", 4.f, 5.f, enemy->GetPosition().GetX(), enemy->GetPosition().GetY());
+	//rengePosition = BuilderEntityGameObject::CreatePlateformGameObject("RengePosition", enemy->GetPosition().GetX(), enemy->GetPosition().GetY(), 8.f, 5.f);
+	rengeProjectil = BuilderEntityGameObject::CreatePlateformGameObject("RengeProjectil", enemy->GetPosition().GetX(), enemy->GetPosition().GetY(), 4.f, 5.f);
 }
 
 void SceneGameWorld::Delete()
@@ -92,20 +94,45 @@ void SceneGameWorld::Render(sf::RenderWindow* _window)
 }
 
 void SceneGameWorld::CollisionRenge(const float& _delta) {
+	EnemyA* enemyA = enemy->GetComponent<EnemyA>();
+	RigidBody2D* rigidBody2D = enemy->GetComponent<RigidBody2D>();
 	if (player && rengePosition)
 	{
 		if (RigidBody2D::IsLeft(*(player->GetComponent<RigidBody2D>()), *(rengePosition->GetComponent<RigidBody2D>())))
 		{
-			EnemyA* enemyA = enemy->GetComponent<EnemyA>();
-			RigidBody2D* rigidBody2D = enemy->GetComponent<RigidBody2D>();
-			if (rigidBody2D->GetVelocity().GetX() > -enemyA->GetMaxSpeed()) rigidBody2D->AddForces(Maths::Vector2f::Left * _delta * enemyA->GetSpeed());
+			if (rigidBody2D->GetVelocity().GetX() > -enemyA->GetMaxSpeed()) rigidBody2D->AddForces(Maths::Vector2f::Right * _delta * enemyA->GetSpeed());
 		}
 		else if (!RigidBody2D::IsRight(*(player->GetComponent<RigidBody2D>()), *(rengePosition->GetComponent<RigidBody2D>())))
 		{
-			EnemyA* enemyA = enemy->GetComponent<EnemyA>();
-			RigidBody2D* rigidBody2D = enemy->GetComponent<RigidBody2D>();
-			if (rigidBody2D->GetVelocity().GetX() > -enemyA->GetMaxSpeed()) rigidBody2D->AddForces(Maths::Vector2f::Right * _delta * enemyA->GetSpeed());
+			if (rigidBody2D->GetVelocity().GetX() > -enemyA->GetMaxSpeed()) rigidBody2D->AddForces(Maths::Vector2f::Left * _delta * enemyA->GetSpeed());
 		}
+	}
+
+
+	else if (player && rengeProjectil)
+	{
+		if (RigidBody2D::IsLeft(*(player->GetComponent<RigidBody2D>()), *(rengeProjectil->GetComponent<RigidBody2D>())))
+		{
+			bulletEnemy = BuilderEntityGameObject::CreateFireBallEnemy("fireBallEnemy", AssetManager::GetAsset("FireBallEnemy"), enemy, 2.f, 1.f, 15.f, 2.f, Maths::Vector2f(100.f, -20.f));
+			if (!enemyA->GetAnimation("shoot")->GetIsPlaying()) {
+				if (enemyA->GetActualAnimation()) enemyA->GetActualAnimation()->Stop();
+				if (enemyA->GetAndSetAnimation("idle")) enemyA->GetAndSetAnimation("idle")->Stop();
+				enemyA->GetAndSetAnimation("shoot")->Play();
+			}
+		}
+		/*else if (!RigidBody2D::IsRight(*(player->GetComponent<RigidBody2D>()), *(rengePosition->GetComponent<RigidBody2D>())))
+		{
+			if (!enemyA->GetAnimation("shoot")->GetIsPlaying())
+			{
+				if (enemyA->GetActualAnimation()) enemyA->GetActualAnimation()->Stop();
+				if (enemyA->GetAndSetAnimation("idle")) enemyA->GetAndSetAnimation("idle")->Stop();
+				enemyA->GetAndSetAnimation("shoot")->Play();
+			}
+		}*/
+		/*else
+		{
+			enemyA->GetAndSetAnimation("idle")->Play();
+		}*/
 	}
 }
 
@@ -128,9 +155,17 @@ void SceneGameWorld::Collision(GameObject* _entity)
 	}
 }
 
+//void SceneGameWorld::ClearBullet() 
+//{
+//	bulletEnemy.clear();
+//}
+
 void SceneGameWorld::Update(const float& _delta)
 {
 	SceneGameAbstract::Update(_delta);
+	CreateRengeEnemy();
 	Collision(player);
 	Collision(enemy);
+	CollisionRenge(_delta);
+	
 }

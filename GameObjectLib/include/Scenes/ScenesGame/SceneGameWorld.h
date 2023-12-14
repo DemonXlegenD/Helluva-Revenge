@@ -23,6 +23,7 @@ public:
 	void CreateEnemy();
 	void Collision(GameObject* _entity);
 	void CollisionRenge(const float& _delta);
+	void CollisionBullet();
 
 	void Render(sf::RenderWindow* _window) override;
 	void Update(const float& _delta) override;
@@ -37,5 +38,6 @@ private:
 	GameObject* plateform = nullptr;
 	GameObject* rengePosition = nullptr;
 	GameObject* rengeProjectil = nullptr;
+	GameObject* bulletEnemy = nullptr;
 
 };
