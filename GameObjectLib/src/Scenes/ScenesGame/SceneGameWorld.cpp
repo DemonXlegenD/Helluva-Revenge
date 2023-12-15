@@ -19,7 +19,7 @@ void SceneGameWorld::Create()
 {
 	SceneGameAbstract::Create();
 	CreatePlayer();
-	CreateEnemy();
+	//CreateEnemy();
 
 	GameObject* OverWorldMap = BuilderGameObject::CreateBackgroundOverWorldGameObject("BackgroundMapWorld1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 0.47f, 0.47f, AssetManager::GetAsset("BackgroundMapBackgroundWorld"));
 	OverWorldMap->SetPosition(Maths::Vector2f(OverWorldMap->GetPosition().x, OverWorldMap->GetPosition().y));
@@ -36,13 +36,20 @@ void SceneGameWorld::CreatePlatformCollision()
 {
 	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform1", 25, 1015, 0.6f, 0.5f));
 	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform2", 115, 1057, 0.3f, 0.5f));
-	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform3", 157, 1115, 0.52f, 0.5f));
+	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform3", 157, 1115, 0.55f, 0.5f));
 	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform4", 98, 1075, 0.1f, 1.5f));
 	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform5", 278, 1035, 0.1f, 0.5f));
-	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform5", 258, 1055, 0.1f, 0.5f));
-	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform6", 238, 1077, 0.1f, 0.5f));
-	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform6", 218, 1096, 0.1f, 0.5f));
+	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform6", 258, 1055, 0.1f, 0.5f));
+	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform7", 238, 1077, 0.1f, 0.5f));
+	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform8", 218, 1096, 0.1f, 0.5f));
+	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform9", 368, 1035, 1.0f, 0.5f));
+	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform10", 630, 1137, 0.65f, 0.5f));
+	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform11", 560, 984, 0.5f, 0.8f));
+	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform12", 683, 982, 0.5f, 1.53f));
+	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform13", 853, 910, 0.70f, 1.15f));
+	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform14", 795, 1075, 0.41f, 0.5f));
 	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("MurExtremiteGauche", -25, 1015, 0.1f, 10.5f));
+	platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform1", 25, 800, 0.6f, 0.5f));
 	//platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform2", 215, 834, 0.15f, 0.5f));
 	//platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform3", 235, 910, 0.70f, 0.5f));
 	//platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform4", 166, 870, 0.1f, 1.1f));
@@ -68,6 +75,10 @@ void SceneGameWorld::CreatePlatformCollision()
 	//platformCarreCollision.push_back(BuilderEntityGameObject::CreatePlatformCollisionGameObject("Platform23", 1868, 693, 0.50f, 1.0f));
 
 	platformTriangleCollision.push_back(BuilderEntityGameObject::CreatePlatformTriangleCollisionGameObject("Triangle1", 7.1f, 7.1f, 135, 1054, 180));
+	platformTriangleCollision.push_back(BuilderEntityGameObject::CreatePlatformTriangleCollisionGameObject("Triangle2", 11.1f, 11.1f, 590, 1145, 180));
+	platformTriangleCollision.push_back(BuilderEntityGameObject::CreatePlatformTriangleCollisionGameObject("Triangle3", 9.1f, 9.1f, 919, 1150, 180));
+	platformTriangleCollision.push_back(BuilderEntityGameObject::CreatePlatformTriangleCollisionGameObject("Triangle4", 8.7f, 8.7f, 767, 1052, 90));
+	platformTriangleCollision.push_back(BuilderEntityGameObject::CreatePlatformTriangleCollisionGameObject("Triangle5", 8.7f, 8.7f, 767, 1052, 90));
 	//platformTriangleCollision.push_back(BuilderEntityGameObject::CreatePlatformTriangleCollisionGameObject("Triangle2", 7.7f, 7.7f, 1360, 715, 90));
 	//platformTriangleCollision.push_back(BuilderEntityGameObject::CreatePlatformTriangleCollisionGameObject("Triangle3", 7.7f, 7.7f, 1310, 853, 180));
 	//platformTriangleCollision.push_back(BuilderEntityGameObject::CreatePlatformTriangleCollisionGameObject("Triangle4", 7.7f, 7.7f, 1312, 700, 180));

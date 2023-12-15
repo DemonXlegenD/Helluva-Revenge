@@ -105,7 +105,7 @@ void SceneOpening::Update(const float& _delta)
     else
     {
         Delete();
-        SceneManager::RunScene("SceneMainMenu");
+        SceneManager::RunScene("SceneGameWorld");
     }
 
     float fillRate = 1.0f;
@@ -115,7 +115,7 @@ void SceneOpening::Update(const float& _delta)
         if (progressBarFill > 1.0f) {
             progressBarFill = 1.0f;
             Delete();
-            SceneManager::RunScene("SceneMainMenu");
+            SceneManager::RunScene("SceneGameWorld");
             return;
         }
     }

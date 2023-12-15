@@ -2,7 +2,7 @@
 
 Rectangle::Rectangle()
 {
-	rectangle.setFillColor(sf::Color::Transparent);
+	rectangle.setFillColor(sf::Color::Green);
 }
 void Rectangle::Render(sf::RenderWindow* _window)
 {

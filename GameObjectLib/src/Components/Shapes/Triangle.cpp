@@ -9,9 +9,9 @@ Triangle::Triangle() : base(10.0f), height(10.0f), widthPos(100), heightPos(100)
     triangle[1].position = sf::Vector2f(100, 10);
     triangle[2].position = sf::Vector2f(100, 100);
 
-    triangle[0].color = sf::Color::Transparent;
-    triangle[1].color = sf::Color::Transparent;
-    triangle[2].color = sf::Color::Transparent;
+    triangle[0].color = sf::Color::Green;
+    triangle[1].color = sf::Color::Green;
+    triangle[2].color = sf::Color::Green;
 }
 
 void Triangle::Render(sf::RenderWindow* _window) {
