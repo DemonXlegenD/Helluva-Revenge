@@ -6,6 +6,7 @@
 #include "Components/RigidBody2D.h"
 #include "Components/ComponentsGame/WeaponsContainer.h"
 #include "Components/ComponentsGame/Bullet.h"
+#include "Components/ComponentsGame/FireBullet.h"
 #include "Components/ComponentsGame/Sword.h"
 #include "Components/ComponentsGame/Gun.h"
 #include "Components/Entity/Character.h"
@@ -264,7 +265,7 @@ GameObject* BuilderEntityGameObject::CreateFireBallEnemy(const std::string& _nam
 	gameObject->SetPosition(Maths::Vector2f(_enemy->GetPosition().GetX(), _enemy->GetPosition().GetY()) + gameObject->GetTransform()->TransformPoint());
 	gameObject->SetDepth(0.9f);
 
-	Bullet* bullet = gameObject->CreateComponent<Bullet>();
+	FireBullet* bullet = gameObject->CreateComponent<FireBullet>();
 
 	Sprite* sprite = gameObject->CreateComponent<Sprite>();
 	sprite->SetName("FireBall");
@@ -282,7 +283,7 @@ GameObject* BuilderEntityGameObject::CreateFireBallEnemy(const std::string& _nam
 	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
 	rigidBody2D->SetSize(sprite->GetBounds().x, sprite->GetBounds().y);
 	rigidBody2D->SetIsGravity(false);
-	//rigidBody2D->AddForces(_direction * bullet->GetSpeed());
+	rigidBody2D->AddForces(_position * bullet->GetSpeed());
 
 	idle->Play();
 

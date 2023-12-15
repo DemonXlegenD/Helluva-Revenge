@@ -22,7 +22,8 @@ public:
 	void CreateRengeEnemy();
 	void CreateEnemy();
 	void Collision(GameObject* _entity);
-	void CollisionRenge(const float& _delta);
+	void CollisionRengePosition(const float& _delta);
+	void CollisionRengeShoot(const float& _delta);
 	void CollisionBullet();
 
 	void Render(sf::RenderWindow* _window) override;
@@ -39,5 +40,7 @@ private:
 	GameObject* rengePosition = nullptr;
 	GameObject* rengeProjectil = nullptr;
 	GameObject* bulletEnemy = nullptr;
+	int TimeShoot = 160;
+	int TimeWait = 150;
 
 };

@@ -25,30 +25,3 @@ float Bullet::GetDamageReduced(Maths::Vector2f& _currentPosition) const
 
 	return damage / (1.f + reductionFactor * pow(distance, 2));
 }
-
-void Bullet::AddAnimation(const std::string& _name, Animation* animation)
-{
-	sf::Texture* texture = new sf::Texture();
-	if (animations.find(_name) == animations.end())
-	{
-		animations.insert(std::make_pair(_name, animation));
-	}
-}
-
-Animation* Bullet::GetAnimation(const std::string& _name)
-{
-	if (animations.find(_name) != animations.end())
-	{
-		return animations.at(_name);
-	}
-	return nullptr;
-}
-Animation* Bullet::GetAndSetAnimation(const std::string& _name)
-{
-	if (animations.find(_name) != animations.end())
-	{
-		actualAnimation = animations.at(_name);
-		return actualAnimation;
-	}
-	return nullptr;
-}

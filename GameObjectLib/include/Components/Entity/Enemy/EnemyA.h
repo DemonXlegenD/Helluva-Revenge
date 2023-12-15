@@ -3,5 +3,10 @@
 
 class EnemyA : public EnemyAbstract
 {
+	EnemyA();
+	void Update(const float& _delta);
+	
+private:
+
 };
 
