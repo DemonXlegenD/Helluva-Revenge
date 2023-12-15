@@ -16,7 +16,9 @@ void SceneOpening::Preload()
 }
 void SceneOpening::Create() 
 {
+    
     Scene::Create();
+
     const float widthWindow = WindowManager::GetFloatWindowWidth();
     const float heightWindow = WindowManager::GetFloatWindowHeight();
     sf::Sprite* spriteLogo = new sf::Sprite();
@@ -100,7 +102,6 @@ void SceneOpening::Update(const float& _delta)
         Delete();
         SceneManager::RunScene("SceneMainMenu");
     }
-
 }
 
 void SceneOpening::Render(sf::RenderWindow* _window)

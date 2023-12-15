@@ -176,7 +176,7 @@ GameObject* BuilderEntityGameObject::CreatePlatformTriangleCollisionGameObject(c
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
   
-  Triangle* triangle = gameObject->CreateComponent<Triangle>();
+	Triangle* triangle = gameObject->CreateComponent<Triangle>();
 	triangle->SetBase(_base);
 	triangle->SetHeight(_height);
 	triangle->SetPositionTriangle(_widthPos, _heightPos, _rotation);

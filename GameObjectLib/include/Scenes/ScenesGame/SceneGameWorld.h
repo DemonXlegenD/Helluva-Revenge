@@ -34,4 +34,8 @@ private:
 	std::vector<GameObject*> platformTriangleCollision;
 	GameObject* plateform = nullptr;
 
+	Maths::Vector2f distance;
+	bool colCarre = false;
+	bool colTriangle = false;
+
 };

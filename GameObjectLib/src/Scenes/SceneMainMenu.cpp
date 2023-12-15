@@ -88,7 +88,8 @@ void SceneMainMenu::Update(const float& _delta)
 		else if (worldButton->GetComponent<Button>()->IsClicked())
 		{
 			AudioManager::PlaySound("ConfirmSelection");
-			SceneManager::RunScene("SceneGameBossRoom");
+			//SceneManager::RunScene("SceneGameBossRoom");
+			SceneManager::RunScene("SceneGameWorld");
 		}
 		else if (optionsButton->GetComponent<Button>()->IsClicked())
 		{

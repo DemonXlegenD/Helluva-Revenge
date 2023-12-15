@@ -45,14 +45,14 @@ void SceneGameAbstract::Create()
 	backgroundAlpha2.backgroundAlpha.setFillColor(sf::Color::Transparent);
 	backgroundAlpha2.backgroundAlpha.setPosition(WindowManager::GetFloatWindowWidth() / 2, WindowManager::GetFloatWindowHeight() / 2);
 	//Background
-	GameObject* background1 = BuilderGameObject::CreateBackgroundGameObject("Background1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1.0f, 1.0f, AssetManager::GetAsset("BackgroundAbstract"));
+	//GameObject* background1 = BuilderGameObject::CreateBackgroundGameObject("Background1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1.0f, 1.0f, AssetManager::GetAsset("BackgroundAbstract"));
 	//Player
 	
 }
 
 void SceneGameAbstract::CreatePlayer()
 {
-	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", WindowManager::GetWindowWidth() / 2, 50.f, AssetManager::GetAsset("Character"), 7.f, 7.f);
+	player = BuilderEntityGameObject::CreateCharacterGameObject("Player", 30, 50.f, AssetManager::GetAsset("Character"), 2.f, 2.f);
 }
 
 void SceneGameAbstract::CreatePlayer(const float& _positionX, const float& _positionY)
