@@ -8,6 +8,8 @@ public:
 	Entity();
 	explicit Entity(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range);
 
+	enum Direction { Left, Right };
+
 	inline int GetHealthPoint() const { return healthPoint; }
 	inline int GetMaxHealthPoint() const { return maxHealthPoint; }
 	inline int GetDamage() const { return damage; }
@@ -23,6 +25,8 @@ public:
 	inline void SetMaxSpeed(const float& _maxSpeed) { maxSpeed = _maxSpeed; }
 	inline void SetAttackSpeed(const float& _attackspeed) { attackSpeed = _attackspeed; }
 	inline void SetRange(const float& _range) { range = _range; }
+
+	void SetDirection(Direction _newDirection);
 
 	inline int GetCurrPathPoint() { return currPathPoint; }
 
@@ -64,4 +68,5 @@ protected:
 	bool isInvicible = false;
 	Animation* actualAnimation = nullptr;
 	std::map<std::string, Animation*> animations;
+	Direction direction;
 };

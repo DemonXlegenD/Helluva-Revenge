@@ -6,5 +6,6 @@ class EnemyA : public EnemyAbstract
 public:
 
 	EnemyA();
+	void Update(const float& _delta);
 };
 
