@@ -4,7 +4,9 @@
 #include "BuildersGameObject/BuilderEntityGameObject.h"
 #include "Components/Entity/Character.h"
 #include "Components/Entity/Enemy/EnemyA.h"
+#include "Components/ComponentsGame/FireBullet.h"
 
+bool SceneGameWorld::flip;
 
 SceneGameWorld::SceneGameWorld(const std::string& _newName) : SceneGameAbstract(_newName) {}
 
@@ -73,7 +75,7 @@ void SceneGameWorld::CreatePlatformCollision()
 
 void SceneGameWorld::CreateEnemy()
 {
-	enemy = BuilderEntityGameObject::CreateEnemyAGameObject("EnemyA", WindowManager::GetWindowWidth() / 2, 40.f, 7.f, 7.f, AssetManager::GetAsset("idleEnemyA"));
+	enemy = BuilderEntityGameObject::CreateEnemyAGameObject("EnemyA", WindowManager::GetWindowWidth() / 2, 40.f, 10.f, 10.f, AssetManager::GetAsset("idleEnemyA"));
 }
 
 void SceneGameWorld::CreateRengeEnemy()
@@ -115,7 +117,7 @@ void SceneGameWorld::CollisionRengeShoot(const float& _delta)
 	RigidBody2D* rigidBody2D = enemy->GetComponent<RigidBody2D>();
 	if (player && rengeProjectil)
 	{
-		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(rengeProjectil->GetComponent<RigidBody2D>())) && TimeShoot > TimeWait)
+		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(rengeProjectil->GetComponent<RigidBody2D>())))
 		{
 			if (rigidBody2D->GetVelocity().GetX() > -enemyA->GetMaxSpeed()) rigidBody2D->AddForces(Maths::Vector2f::Right * _delta * 0);
 			if (!enemyA->GetAnimation("shoot")->GetIsPlaying()) {
@@ -123,12 +125,19 @@ void SceneGameWorld::CollisionRengeShoot(const float& _delta)
 				if (enemyA->GetAndSetAnimation("idle")) enemyA->GetAndSetAnimation("idle")->Stop();
 				enemyA->GetAndSetAnimation("shoot")->Play();
 			}
-			if(player->GetPosition().GetX() <= enemy->GetPosition().GetX()) bulletEnemy = BuilderEntityGameObject::CreateFireBallEnemy("fireBallEnemy", AssetManager::GetAsset("FireBallEnemy"), enemy, 2.f, 1.f, 15.f, 15.f, Maths::Vector2f(-1.f, 0.f));
-			if(player->GetPosition().GetX() > enemy->GetPosition().GetX()) bulletEnemy = BuilderEntityGameObject::CreateFireBallEnemy("fireBallEnemy", AssetManager::GetAsset("FireBallEnemy"), enemy, 2.f, 1.f, 15.f, 15.f, Maths::Vector2f(1.f, 0.f));
-			TimeShoot = 0;
+			if (player->GetPosition().GetX() <= enemy->GetPosition().GetX())
+			{
+				flip = false;
+				EnemyA::Attack(-1.f,0.f);
+			}
+			if (player->GetPosition().GetX() > enemy->GetPosition().GetX()) 
+			{
+				flip = true;
+				EnemyA::Attack(1.f, 0.f);
+			}
 
 		}
-		else if (!RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(rengeProjectil->GetComponent<RigidBody2D>())) && TimeShoot > TimeWait)
+		else if (!RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(rengeProjectil->GetComponent<RigidBody2D>())))
 		{
 			if (!enemyA->GetAnimation("idle")->GetIsPlaying())
 			{
@@ -173,10 +182,12 @@ void SceneGameWorld::Update(const float& _delta)
 	Collision(enemy);
 	CollisionRengePosition(_delta);
 	CollisionRengeShoot(_delta);
-
-	if (RigidBody2D::IsColliding(*(bulletEnemy->GetComponent<RigidBody2D>()), *(player->GetComponent<RigidBody2D>())))
-	{
-		//std::cout << "coucou";
+	if (EnemyA::GetBulletEnemy()->GetComponent<RigidBody2D>() && player) {
+		if (RigidBody2D::IsColliding(*(EnemyA::GetBulletEnemy()->GetComponent<RigidBody2D>()), *(player->GetComponent<RigidBody2D>())))
+		{
+			//std::cout << "coucou";
+		}
 	}
+	
 	
 }

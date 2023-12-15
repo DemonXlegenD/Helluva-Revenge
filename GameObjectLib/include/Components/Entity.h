@@ -64,4 +64,5 @@ protected:
 	Animation* actualAnimation = nullptr;
 	std::map<std::string, Animation*> animations;
 	Direction direction;
+	bool directionEnemy;
 };

@@ -29,6 +29,8 @@ public:
 	std::vector<GameObject*> GetEnemies() { return enemies; }
 	GameObject* GetEnemie(int _index) { return enemies[_index]; }
 
+	GameObject* GetEnemy() { return enemy; }
+
 	void SetFirstCollide(const bool& _state) { firstCollide = _state; }
 	bool GetFirstCollide() const { return firstCollide; }
 

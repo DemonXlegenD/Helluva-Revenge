@@ -5,7 +5,9 @@
 class FireBullet : public Component
 {
 public:
+	enum Direction { Left, Right };
 
+	FireBullet();
 	void Update(const float& _delta) override;
 
 	inline void SetSpeed(const float& _speed) { speed = _speed; }
@@ -17,11 +19,14 @@ public:
 	inline Animation* GetActualAnimation() const { return actualAnimation; }
 	inline void SetActualAnimation(Animation* animation) { actualAnimation = animation; }
 
+	void SetDirection(Direction _newDirection);
 	void Collision();
 
 private:
 	float speed = 330.f;
 	std::map<std::string, Animation*> animations;
 	Animation* actualAnimation = nullptr;
+	bool directionFireBullet;
+	Direction direction;
 };
 

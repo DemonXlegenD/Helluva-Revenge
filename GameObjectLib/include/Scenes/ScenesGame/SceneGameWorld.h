@@ -29,6 +29,7 @@ public:
 	void Render(sf::RenderWindow* _window) override;
 	void Update(const float& _delta) override;
 
+	static bool GetFlip() { return flip; };
 private:
 	sf::VertexArray triangle;
 	GameObject* backButton = nullptr;
@@ -42,5 +43,5 @@ private:
 	GameObject* bulletEnemy = nullptr;
 	int TimeShoot = 160;
 	int TimeWait = 150;
-
+	static bool flip;
 };
