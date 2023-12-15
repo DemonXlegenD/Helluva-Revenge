@@ -28,6 +28,8 @@ void SceneGameWorld::Create()
 	//GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 0.47f, 0.47f, AssetManager::GetAsset("BackgroundMapWorld"));
 	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, 1200, 100, 1);
 	this->CreatePlatformCollision();
+
+	hud = new ATH(player->GetComponent<Character>(), Character::MaxHealth);
 }
 
 void SceneGameWorld::CreatePlatformCollision()
@@ -94,6 +96,12 @@ void SceneGameWorld::Render(sf::RenderWindow* _window)
 {
 	Scene::Render(_window);
 	_window->draw(isPause ? backgroundAlpha2.backgroundAlpha : backgroundAlpha1.backgroundAlpha);
+	_window->setView(_window->getDefaultView());
+
+	if (hud) {
+		hud->Render(*_window);
+	}
+	_window->setView(CameraManager::GetView());
 }
 
 void SceneGameWorld::Collision(GameObject* _entity)
@@ -138,4 +146,9 @@ void SceneGameWorld::Update(const float& _delta)
 	SceneGameAbstract::Update(_delta);
 	Collision(player);
 	Collision(enemy);
+
+	if (hud) {
+		hud->Update(_delta);
+	}
 }
+

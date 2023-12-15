@@ -10,10 +10,11 @@ SceneOpening::SceneOpening(const std::string& _name) : Scene(_name){}
 void SceneOpening::Preload()
 {
     Scene::Preload();
-    AssetManager::AddAsset("HelluvaStudioLogo", "../Assets/Helluva_Logo3.png");
-    AssetManager::AddAsset("Pegi", "../Assets/PEGI_16.png");
-    AssetManager::AddAsset("Warning", "../Assets/warning.jpg");
+    AssetManager::AddAsset("HelluvaStudioLogo", "../Assets/Graphics/UI/Icons/Helluva_Logo.png");
+    AssetManager::AddAsset("Pegi", "../Assets/Graphics/UI/Icons/PEGI_16.png");
+    AssetManager::AddAsset("Warning", "../Assets/Graphics/UI/Icons/warning_content.jpg");
 }
+
 void SceneOpening::Create() 
 {
     
@@ -43,10 +44,14 @@ void SceneOpening::Create()
     sprites.push_back(spriteLogo);
     sprites.push_back(spritePegi_16);
     sprites.push_back(spriteWarning);
-    fadeInTimeDefault = 1.f;
-    fadeOutTimeDefault = 1.f;
+    fadeInTimeDefault = 0.2f;
+    fadeOutTimeDefault = 0.3f;
     isFadeIn = true;
     isFadeOut = false;
+
+    progressBar.setSize(sf::Vector2f(300, 20));
+    progressBar.setPosition(widthWindow / 2 - 150, heightWindow - 50);
+    progressBar.setFillColor(sf::Color::Green);
 }
 
 void SceneOpening::Delete()
@@ -102,13 +107,33 @@ void SceneOpening::Update(const float& _delta)
         Delete();
         SceneManager::RunScene("SceneMainMenu");
     }
+
+    float fillRate = 1.0f;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        progressBarFill += fillRate * _delta;
+        if (progressBarFill > 1.0f) {
+            progressBarFill = 1.0f;
+            Delete();
+            SceneManager::RunScene("SceneMainMenu");
+            return;
+        }
+    }
+    else {
+        progressBarFill -= fillRate * _delta;
+        if (progressBarFill < 0.0f) progressBarFill = 0.0f;
+    }
+
+    progressBar.setSize(sf::Vector2f(300 * progressBarFill, 20));
 }
 
 void SceneOpening::Render(sf::RenderWindow* _window)
 {
-    if (actualSprite < 3)
-    {
+    if (actualSprite < 3) {
         _window->draw(*sprites[actualSprite]);
     }
+
+    _window->draw(progressBar);
+
     Scene::Render(_window);
 }
