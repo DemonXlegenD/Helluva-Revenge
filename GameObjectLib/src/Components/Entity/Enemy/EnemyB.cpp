@@ -7,22 +7,6 @@
 EnemyB::EnemyB() : Entity() {
     speed = 5.f;  // Vitesse de base de l'ennemi
     isChasing = false;
-    InitializeAnimations();
-}
-
-void EnemyB::InitializeAnimations() {
-    // Supposons que toutes les animations sont dans un seul spritesheet
-    sf::Texture* texture = AssetManager::GetAsset("EnemyB.png");
-
-    // Idle Animation
-    idleAnimation = GetOwner()->CreateComponent<Animation>();
-    idleAnimation->SetSpriteSheet(texture);
-    idleAnimation->SetFrame(6);  // 6 images pour l'animation idle
-    idleAnimation->SetAnimationTime(1);
-    idleAnimation->SetLoop(-1);
-    idleAnimation->SetRecTextureWithFrame(0, 0, 6, 1);  // Première ligne pour idle
-
-    // Autres animations (chase, bite, death) sont initialisées de manière similaire
 }
 
 void EnemyB::Update(const float& _delta) {

@@ -84,7 +84,7 @@ void SceneGameWorld::CreatePlatformCollision()
 void SceneGameWorld::CreateEnemy()
 {
 	enemy = BuilderEntityGameObject::CreateEnemyAGameObject("EnemyA", WindowManager::GetWindowWidth() / 2, 600.f, 7.f, 7.f, AssetManager::GetAsset("idleEnemyA"));
-	GameObject* enemyB = BuilderEntityGameObject::CreateEnemyBGameObject("EnemyB", /* position x */, /* position y */, /* scale x */, /* scale y */);
+	GameObject* enemyB = BuilderEntityGameObject::CreateEnemyBGameObject("EnemyB", WindowManager::GetWindowWidth() / 2, 600.f, 7.f, 7.f, AssetManager::GetAsset("EnemyBIdle"));
 }
 
 void SceneGameWorld::CreateRengeEnemy()
