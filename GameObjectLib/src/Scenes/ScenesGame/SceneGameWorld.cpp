@@ -220,6 +220,17 @@ void SceneGameWorld::Update(const float& _delta)
 				
 			}
 		}
+
+		/*
+		// Vérifier les collisions entre les balles et EnemyB
+		for (auto& bullet : bullets) { // Supposons que vous avez une liste de bullets
+			if (RigidBody2D::IsColliding(*(bullet->GetComponent<RigidBody2D>()), *(enemyB->GetComponent<RigidBody2D>()))) {
+				// Appeler TakeDamage sur EnemyB
+				enemyB->GetComponent<EnemyB>()->TakeDamage(bullet->GetComponent<Bullet>()->GetDamage());
+				// Vous pouvez aussi détruire la balle ici
+			}
+		}
+		*/
 	}
 
 	if (hud) {

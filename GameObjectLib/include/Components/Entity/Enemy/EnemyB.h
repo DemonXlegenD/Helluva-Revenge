@@ -7,6 +7,8 @@ public:
     void Update(const float& _delta) override;
     void ChasePlayer(const float& _delta);
 
+    void OnCollision(GameObject* other);
+
     void InitializeAnimations();
 
 private:
