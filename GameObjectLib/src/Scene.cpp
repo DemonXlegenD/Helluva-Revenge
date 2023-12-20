@@ -1,6 +1,5 @@
 #include "Scene.h"
 #include "Managers/WindowManager.h"
-#include "Managers/WindowManager.h"
 
 #include <iostream>
 Scene::Scene(const std::string& _name)
