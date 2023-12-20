@@ -20,6 +20,10 @@ void SceneGameWorld::Preload()
 	AssetManager::AddAsset("idleEnemyA", "Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-idle.png");
 	AssetManager::AddAsset("shootEnemyA", "Assets/Enemy/Hell-Beast-Files/PNG/with-stroke/hell-beast-breath.png");
 	AssetManager::AddAsset("FireBallEnemy", "Assets/Enemy/Hell-Beast-Files/PNG/fire-ball.png");
+	AssetManager::AddAssetSegment("EnemyBIdle", "Assets/Enemy/EnemyB.png", 0, 6, 512 / 6, 256 / 4); // Ligne 1 - Idle
+	AssetManager::AddAssetSegment("EnemyBChase", "Assets/Enemy/EnemyB.png", 1, 6, 512 / 6, 256 / 4); // Ligne 2 - Chase	
+	AssetManager::AddAssetSegment("EnemyBBite", "Assets/Enemy/EnemyB.png", 2, 4, 512 / 6, 256 / 4); // Ligne 3 - Attack
+	AssetManager::AddAssetSegment("EnemyBDeath", "Assets/Enemy/EnemyB.png", 3, 8, 512 / 6, 256 / 4); // Ligne 4 - Death
 }
 
 void SceneGameWorld::Create()
@@ -27,6 +31,7 @@ void SceneGameWorld::Create()
 	SceneGameAbstract::Create();
 	CreatePlayer();
 	CreateEnemy();
+
 	GameObject* backgroundWorldMap = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld1", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1,1, AssetManager::GetAsset("BackgroundMapBackgroundWorld"), 0);
 	GameObject* backgroundWorldMap2 = BuilderGameObject::CreateBackgroundGameObject("BackgroundMapWorld2", WindowManager::GetWindowWidth() / 2, WindowManager::GetWindowHeight() / 2, 1,1, AssetManager::GetAsset("BackgroundMapWorld"), 0);
 	plateform = BuilderEntityGameObject::CreatePlateformGameObject("plateform", WindowManager::GetWindowWidth() / 2, 1200, 100, 2);
@@ -79,6 +84,7 @@ void SceneGameWorld::CreatePlatformCollision()
 void SceneGameWorld::CreateEnemy()
 {
 	enemy = BuilderEntityGameObject::CreateEnemyAGameObject("EnemyA", WindowManager::GetWindowWidth() / 2, 600.f, 7.f, 7.f, AssetManager::GetAsset("idleEnemyA"));
+	GameObject* enemyB = BuilderEntityGameObject::CreateEnemyBGameObject("EnemyB", WindowManager::GetWindowWidth() / 2, 600.f, 7.f, 7.f, AssetManager::GetAsset("EnemyBIdle"));
 }
 
 void SceneGameWorld::CreateRengeEnemy()
@@ -214,6 +220,17 @@ void SceneGameWorld::Update(const float& _delta)
 				
 			}
 		}
+
+		/*
+		// Vérifier les collisions entre les balles et EnemyB
+		for (auto& bullet : bullets) { // Supposons que vous avez une liste de bullets
+			if (RigidBody2D::IsColliding(*(bullet->GetComponent<RigidBody2D>()), *(enemyB->GetComponent<RigidBody2D>()))) {
+				// Appeler TakeDamage sur EnemyB
+				enemyB->GetComponent<EnemyB>()->TakeDamage(bullet->GetComponent<Bullet>()->GetDamage());
+				// Vous pouvez aussi détruire la balle ici
+			}
+		}
+		*/
 	}
 
 	if (hud) {

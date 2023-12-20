@@ -13,6 +13,7 @@
 #include "Components/Entity/Character.h"
 #include "Components/Inputs/InputCharacter.h"
 #include "Components/Entity/Enemy/EnemyA.h"
+#include "Components/Entity/Enemy/EnemyB.h"
 #include "Components/Entity/Enemy/Hades.h"
 #include "Components/Entity/Enemy/ProtectionBall.h"
 
@@ -314,6 +315,58 @@ GameObject* BuilderEntityGameObject::CreateEnemyAGameObject(const std::string& _
 
 	return gameObject;
 }
+
+GameObject* BuilderEntityGameObject::CreateEnemyBGameObject(const std::string& name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture) {
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(name);
+	gameObject->SetPosition(Maths::Vector2f(_x, _y));
+	gameObject->SetScale(Maths::Vector2f(scalex, scaley));
+	gameObject->SetDepth(0.9f);
+
+	EnemyB* enemy = gameObject->CreateComponent<EnemyB>();
+
+	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
+	spriteBody->SetName("bodyEnemyB");
+	spriteBody->SetTexture(_texture);
+
+	// Set up animations
+	Animation* idle = gameObject->CreateComponent<Animation>();
+	idle->SetLoop(-1);
+	idle->SetName("idle");
+	idle->SetFrame(6);
+	idle->SetAnimationTime(1);
+	idle->SetSpriteSheet(AssetManager::GetAsset("EnemyBIdle"));
+
+	Animation* chase = gameObject->CreateComponent<Animation>();
+	idle->SetLoop(-1);
+	idle->SetName("chase");
+	idle->SetFrame(6);
+	idle->SetAnimationTime(1);
+	idle->SetSpriteSheet(AssetManager::GetAsset("EnemyBChase"));
+
+	Animation* bite = gameObject->CreateComponent<Animation>();
+	idle->SetLoop(-1);
+	idle->SetName("bite");
+	idle->SetFrame(6);
+	idle->SetAnimationTime(1);
+	idle->SetSpriteSheet(AssetManager::GetAsset("EnemyBBite"));
+
+	Animation* death = gameObject->CreateComponent<Animation>();
+	idle->SetLoop(-1);
+	idle->SetName("death");
+	idle->SetFrame(6);
+	idle->SetAnimationTime(1);
+	idle->SetSpriteSheet(AssetManager::GetAsset("EnemyBDeath"));
+
+	idle->Play();
+
+	enemy->AddAnimation("idle", idle);
+	enemy->AddAnimation("chase", chase);
+	enemy->AddAnimation("bite", bite);
+	enemy->AddAnimation("death", death);
+
+	return gameObject;
+}
+
 
 
 GameObject* BuilderEntityGameObject::CreateHadesGameObject(const std::string& _name, float _x, float _y, float scalex, float scaley, sf::Texture* _texture)
