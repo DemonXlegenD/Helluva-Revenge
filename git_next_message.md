@@ -1,3 +1,3 @@
-NEW : THE END
+ENH : Création de collision
 
-- Création d'une fin après le boss
+- Collision gauche droite et top

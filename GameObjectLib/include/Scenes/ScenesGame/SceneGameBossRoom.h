@@ -20,6 +20,9 @@ public:
 
 private:
 	GameObject* plateforme = nullptr;
+	GameObject* wallRight = nullptr;
+	GameObject* wallLeft = nullptr;
+	GameObject* ceiling = nullptr;
 	GameObject* textDialogue = nullptr;
 	float victoryTime = 3.f;
 

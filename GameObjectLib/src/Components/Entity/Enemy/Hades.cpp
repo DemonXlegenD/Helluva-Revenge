@@ -10,7 +10,7 @@ Hades::Hades() : Entity(5000, 200, 500.f, 40.f, 10000.f)
 	attackFire = BuilderEntityGameObject::CreateRangeHadesCollisionGameObject("CollisionRangeHades", -200, 1000, 1.5f, 2.5f);
 	damageZone = BuilderEntityGameObject::CreateRangeHadesCollisionGameObject("DamageZone", -200, 1000, 2.0f, 7.5f);
 	float nightmareX = (randomAttackCheval == 0) ? 2200 : 0;
-	nightmare = BuilderEntityGameObject::CreateChevalGameObject("Nightmare", nightmareX, 900, 2.5f, 2.5f, AssetManager::GetAsset("NightmareGalloping"));
+	nightmare = BuilderEntityGameObject::CreateChevalGameObject("Nightmare", nightmareX, 800, 2.5f, 2.5f, AssetManager::GetAsset("NightmareGalloping"));
 	countAllerRetour = 1;
 	countAllerRetour2 = 2;
 	countAllerRetour3 = 3;
@@ -109,7 +109,7 @@ void Hades::AttackFire(const float& _delta)
 				cooldownAttackFeu -= _delta;
 				if (cooldownAttackFeu <= 0.0f)
 				{
-					player->GetComponent<Character>()->TakeDamage(20);
+					player->GetComponent<Character>()->TakeDamage(10);
 					cooldownAttackFeu = 2.0f;
 				}
 			}
@@ -145,7 +145,7 @@ void Hades::DamageZoneHades(const float& _delta)
 
 		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(damageZone->GetComponent<RigidBody2D>())))
 		{
-			player->GetComponent<Character>()->TakeDamage(1 * _delta);
+			player->GetComponent<Character>()->TakeDamage(0.5 * _delta);
 		}
 	}
 }
