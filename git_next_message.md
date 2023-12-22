@@ -1,4 +1,3 @@
-FIX : Button et background
+NEW : THE END
 
-- Fix de l'état des buttons lorsqu'on clique dessus
-- Background recentré
+- Création d'une fin après le boss

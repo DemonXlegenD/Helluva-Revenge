@@ -5,8 +5,6 @@ class Gun : public Weapon
 {
 public:
 	Gun();
-	~Gun();
-
 
 	void Update(const float& _delta) override;
 	void Render(sf::RenderWindow* _window) override;

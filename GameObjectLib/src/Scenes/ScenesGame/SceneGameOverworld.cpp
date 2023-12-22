@@ -1,4 +1,4 @@
-#include "Scenes/ScenesGame/ScenesTest.h"
+#include "Scenes/ScenesGame/SceneGameOverworld.h"
 #include "Components/Entity/Character.h"
 #include "BuilderGameObject.h"
 #include "Managers/CameraManager.h"
@@ -12,40 +12,39 @@
 #include "Components/RigidBody2D.h"
 #include "TileMap/TileMap.h"
 
-ScenesTest::ScenesTest(const std::string& _newName) : SceneGameAbstract(_newName) {
+SceneGameOverworld::SceneGameOverworld(const std::string& _newName) : SceneGameAbstract(_newName) {
 }
 
-ScenesTest::~ScenesTest() {}
+SceneGameOverworld::~SceneGameOverworld() {}
 
-void ScenesTest::Awake()
+void SceneGameOverworld::Awake()
 {
 	SceneGameAbstract::Awake();
 }
 
-void ScenesTest::Delete()
+void SceneGameOverworld::Delete()
 {
 	SceneGameAbstract::Delete();
 }
 
-void ScenesTest::Preload()
+void SceneGameOverworld::Preload()
 {
 	SceneGameAbstract::Preload();
 	AssetManager::AddAsset("BackgroundSceneGame1", "Assets/Graphics/Backgrounds/SceneGame/backgroundSky.jpg");
 }
 
-void ScenesTest::Create()
+void SceneGameOverworld::Create()
 {
 	CameraManager::DefaultZoom();
 	SceneGameAbstract::Create();
 	backgrounds.push_back(BuilderGameObject::CreateBackgroundGameObject("BackgroundSceneGame1", 0, 0, 7.0f, 3.0f, AssetManager::GetAsset("BackgroundSceneGame1"), 0, 0.f));
-
 	tileMap = BuilderEntityGameObject::CreateMapGameObject("OverWorld", "Assets/Graphics/Maps/WorldMap/WorldMap.json", "Assets/Graphics/Maps/WorldMap/worldMapBackground.png", 89);
 
 	CreatePlayer(500,1400);
 	CameraManager::SetZoom(1.75f);
 }
 
-void ScenesTest::Collinding()
+void SceneGameOverworld::Collinding()
 {
 	if (player && tileMap)
 	{
@@ -117,13 +116,13 @@ void ScenesTest::Collinding()
 }
 
 
-void ScenesTest::Physics(const float& _delta)
+void SceneGameOverworld::Physics(const float& _delta)
 {
 	SceneGameAbstract::Physics(_delta);
 	this->Collinding();
 }
 
-void ScenesTest::Update(const float& _delta)
+void SceneGameOverworld::Update(const float& _delta)
 {
 	SceneGameAbstract::Update(_delta);
 	if (!isPause)
@@ -157,7 +156,7 @@ void ScenesTest::Update(const float& _delta)
 
 }
 
-void ScenesTest::Render(sf::RenderWindow* _window)
+void SceneGameOverworld::Render(sf::RenderWindow* _window)
 {
 	SceneGameAbstract::Render(_window);
 }

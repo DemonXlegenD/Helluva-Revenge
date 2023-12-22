@@ -10,9 +10,9 @@ public:
 
 	enum Direction { Left, Right };
 
-	inline int GetHealthPoint() const { return healthPoint; }
-	inline int GetMaxHealthPoint() const { return maxHealthPoint; }
-	inline int GetDamage() const { return damage; }
+	inline float GetHealthPoint() const { return healthPoint; }
+	inline float GetMaxHealthPoint() const { return maxHealthPoint; }
+	inline float GetDamage() const { return damage; }
 	inline float GetSpeed() const { return speed; }
 	inline float GetMaxSpeed() const { return maxSpeed; }
 	inline float GetAttackSpeed() const { return attackSpeed; }
@@ -37,8 +37,8 @@ public:
 
 	void SetDirection(Direction _newDirection);
 
-	void TakeDamage(const int& damage);
-	void TakeHealt(const int& _healt) { healthPoint += _healt; }
+	void TakeDamage(const float& damage);
+	void TakeHealt(const float& _healt) { healthPoint += _healt; }
 	virtual void Die();
 	void Update(const float& _delta) override;
 
@@ -62,9 +62,9 @@ protected:
 	int currPathPoint = 0;
 	int count = 0;
 
-	int healthPoint;
-	int maxHealthPoint;
-	int damage;
+	float healthPoint;
+	float maxHealthPoint;
+	float damage;
 	int lane;
 	float speed;
 	float maxSpeed;
@@ -73,6 +73,7 @@ protected:
 	bool onFloor = true;
 	bool isInvicible = false;
 	bool isFiring = false;
+
 	Animation* actualAnimation = nullptr;
 	std::map<std::string, Animation*> animations;
 	Direction direction;

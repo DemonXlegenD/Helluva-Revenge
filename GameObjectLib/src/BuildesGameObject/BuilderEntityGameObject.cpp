@@ -16,6 +16,7 @@
 #include "Components/Entity/Enemy/Hades.h"
 #include "Components/Entity/Enemy/ProtectionBall.h"
 #include "Components/ComponentsGame/LavaArea.h"
+#include "Components/UIElements/ATH.h"
 
 #include <Components/Shapes/Rectangle.h>
 #include <Components/Shapes/Triangle.h>
@@ -168,16 +169,11 @@ GameObject* BuilderEntityGameObject::CreateCharacterGameObject(const std::string
 
 	InputCharacter* inputCharacter = gameObject->CreateComponent<InputCharacter>();
 
-
 	WeaponsContainer* weaponsContainer = gameObject->CreateComponent<WeaponsContainer>();
 	weaponsContainer->AddNewWeapon(BuilderEntityGameObject::CreateWeaponGameObject(std::string("Gun"), gameObject, Weapon::TypeWeapon::Gun, _x, _y, 25.f, 100.f, 0.02f));
-	/*HealthPointBar* healthPointBar = gameObject->CreateComponent<HealthPointBar>();
-	healthPointBar->SetHealthPoint(player->GetHealthPoint());
-	healthPointBar->SetMaxHealthPoint(player->GetMaxHealthPoint());
-	healthPointBar->SetAboveSprite(sprite->GetBounds().y / 2 + 50.f);
-	healthPointBar->SetSize(sprite->GetBounds().x, 5);
-	healthPointBar->SetScale(scalex, scaley);
-	healthPointBar->SetHealthPointBar();*/
+	
+	ATH* ath = gameObject->CreateComponent<ATH>();
+	ath->SetCharacter(character);
 
 	return gameObject;
 }
@@ -300,6 +296,7 @@ GameObject* BuilderEntityGameObject::CreatePlateformGameObject(const std::string
 	return gameObject;
 }
 
+
 GameObject* BuilderEntityGameObject::CreateRectangleSpriteGameObject(const std::string& _name, const float& _positionX, const float& _positionY, const float& _scalex, const float& _scaley, sf::Texture* _texture)
 {
 	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
@@ -316,16 +313,35 @@ GameObject* BuilderEntityGameObject::CreateRectangleSpriteGameObject(const std::
 	spriteBody->SetName("lavaSprite");
 	spriteBody->SetTexture(_texture);
 
-	//spriteBody->SetRecTextureWithFrame(0, 0, 6, 1);
-
 	LavaArea* lava = gameObject->CreateComponent<LavaArea>();
-
-
 
 	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
 	squareCollider->SetName("lava");
 	squareCollider->SetWidthCollider(200.f * _scalex);
 	squareCollider->SetHeightCollider(50.f * _scaley);
+
+	return gameObject;
+}
+
+GameObject* BuilderEntityGameObject::CreateRectangleSpriteGameObject(const std::string& _name, const std::string& _nameSprite, const float& _positionX, const float& _positionY, const float& _scalex, const float& _scaley, sf::Texture* _texture)
+{
+	GameObject* gameObject = SceneManager::GetActiveGameScene()->CreateGameObject(_name);
+	gameObject->SetScale(Maths::Vector2f(_scalex, _scaley));
+	gameObject->SetDepth(0.1f);
+	gameObject->SetPosition(Maths::Vector2f(_positionX, _positionY));
+
+	RigidBody2D* rigidBody2D = gameObject->CreateComponent<RigidBody2D>();
+	rigidBody2D->SetIsGravity(false);
+	
+	Sprite* spriteBody = gameObject->CreateComponent<Sprite>();
+	spriteBody->SetName("rectangle");
+	spriteBody->SetTexture(_texture);
+	rigidBody2D->SetSize(spriteBody->GetBounds().x, spriteBody->GetBounds().y);
+
+	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();
+	squareCollider->SetName("lava");
+	squareCollider->SetWidthCollider(spriteBody->GetBounds().x * _scalex);
+	squareCollider->SetHeightCollider(spriteBody->GetBounds().y * _scaley);
 
 	return gameObject;
 }
@@ -553,7 +569,7 @@ GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::s
 	// astral
 	if(_number <= 5) spriteBody->SetRecTextureWithFrame(0, 0, 4, 2);
 	// feu
-	else if(_number >= 6 && _number <= 30) spriteBody->SetRecTextureWithFrame(1, 0, 4, 2); 
+	else if(_number >= 6 && _number <= 30) spriteBody->SetRecTextureWithFrame(1, 1, 4, 2); 
 	//spirituel
 	else if(_number >= 31 && _number <= 40) spriteBody->SetRecTextureWithFrame(2, 0, 4, 2);
 	//eau ténébreuse
@@ -561,11 +577,11 @@ GameObject* BuilderEntityGameObject::CreateProtectionBallGameObject(const std::s
 	//lave
 	else if(_number >= 56 && _number <= 70) spriteBody->SetRecTextureWithFrame(0, 1, 4, 2);
 	//verte
-	else if(_number >= 71 && _number <= 75) spriteBody->SetRecTextureWithFrame(0, 3, 4, 2);
+	else if(_number >= 71 && _number <= 75) spriteBody->SetRecTextureWithFrame(1, 0, 4, 2);
 	//abysse
 	else if(_number >= 86 && _number <= 90) spriteBody->SetRecTextureWithFrame(3, 0, 4, 2);
 	//eau
-	else if(_number >= 91 &&  _number <= 100) spriteBody->SetRecTextureWithFrame(2, 1, 4, 2);
+	else spriteBody->SetRecTextureWithFrame(2, 1, 4, 2);
 
 
 	SquareCollider* squareCollider = gameObject->CreateComponent<SquareCollider>();

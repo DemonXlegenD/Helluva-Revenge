@@ -13,7 +13,6 @@
 
 #include "BuilderGameObject.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
-#include <Scenes/ScenesGame/SceneGameWorld.h>
 
 
 SceneGameAbstract::SceneGameAbstract(const std::string& _newName) : Scene(_newName)
@@ -58,7 +57,6 @@ void SceneGameAbstract::Preload()
 {
 	Scene::Preload();
 
-	AssetManager::AddAsset("BackgroundAbstract", "Assets/Graphics/Backgrounds/bgMenu.png");
 	AssetManager::AddAsset("idleCharacter", "Assets/Graphics/Characters/Zephyr/Idle/Character_Idle_48x48.png");
 	AssetManager::AddAsset("Character", "Assets/Graphics/Characters/Zephyr/Idle/Character-Idle_01.png");
 	AssetManager::AddAsset("jumpCharacter", "Assets/Graphics/Characters/Zephyr/Jump/Character_Jump_48x48.png");
@@ -87,6 +85,28 @@ void SceneGameAbstract::Preload()
 void SceneGameAbstract::Delete() 
 {
 	Scene::Delete();
+	AssetManager::DeleteAsset("idleCharacter");
+	AssetManager::DeleteAsset("Character");
+	AssetManager::DeleteAsset("jumpCharacter");
+	AssetManager::DeleteAsset("runCharacter");
+	AssetManager::DeleteAsset("shootArm");
+	AssetManager::DeleteAsset("shootBody");
+	AssetManager::DeleteAsset("bullet");
+	AssetManager::DeleteAsset("ButtonsMenu");
+
+	AudioManager::DeleteSound("GunShot");
+	AudioManager::DeleteSound("GunEmpty");
+	AudioManager::DeleteSound("GunReload");
+
+	AudioManager::DeleteSound("Character_Footstep1");
+	AudioManager::DeleteSound("Character_Footstep2");
+	AudioManager::DeleteSound("Character_Footstep3");
+	AudioManager::DeleteSound("Character_Footstep4");
+	AudioManager::DeleteSound("Character_Footstep5");
+	AudioManager::DeleteSound("Character_Footstep6");
+	AudioManager::DeleteSound("Character_Footstep7");
+	AudioManager::DeleteSound("Character_Jump");
+	AudioManager::DeleteSound("Character_JumpImpact");
 }
 
 void SceneGameAbstract::Pause()

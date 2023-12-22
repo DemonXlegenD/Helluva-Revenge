@@ -26,18 +26,17 @@ void RigidBody2D::Update(const float& _delta)
 
 void RigidBody2D::Render(sf::RenderWindow* _window)
 {
-//#ifdef _DEBUG
-//	{
-//		const Maths::Vector2f position = GetOwner()->GetPosition();
-//		const Maths::Vector2f scale = GetOwner()->GetScale();
-//		rectangle.setFillColor(sf::Color::Red);
-//		rectangle.setSize(sf::Vector2f(GetWidthCollider(), GetHeightCollider()));
-//		rectangle.setScale(sf::Vector2f(scale.x, scale.y));
-//		rectangle.setOrigin(sf::Vector2f(GetWidthCollider() / 2, GetHeightCollider() / 2));
-//		rectangle.setPosition(sf::Vector2f(position.x, position.y));
-//		_window->draw(rectangle);
-//	}
-//#endif
+	if(show)
+	{
+		const Maths::Vector2f position = GetOwner()->GetPosition();
+		const Maths::Vector2f scale = GetOwner()->GetScale();
+		rectangle.setFillColor(sf::Color::Red);
+		rectangle.setSize(sf::Vector2f(GetWidthCollider(), GetHeightCollider()));
+		rectangle.setScale(sf::Vector2f(scale.x, scale.y));
+		rectangle.setOrigin(sf::Vector2f(GetWidthCollider() / 2, GetHeightCollider() / 2));
+		rectangle.setPosition(sf::Vector2f(position.x, position.y));
+		_window->draw(rectangle);
+	}
 }
 
 void RigidBody2D::Gravity()

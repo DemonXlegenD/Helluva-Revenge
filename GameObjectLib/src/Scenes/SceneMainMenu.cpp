@@ -22,12 +22,12 @@ void SceneMainMenu::Preload()
 	AssetManager::AddAsset("ButtonsMenu", "Assets/Graphics/UI/Buttons/buttonsMenu.png");
 	AssetManager::AddAsset("ButtonGrey", "Assets/Graphics/UI/Buttons/buttonGrey.png");
 
+	AudioManager::AddMusic("MusicAmbiant_HOM", "Assets/Audio/Musics/MusicAmbiant_Hommage.ogg");
+
 	AudioManager::AddSound("ConfirmSelection", "Assets/Audio/SFX/confirm_selection.ogg");
 	AudioManager::AddSound("CancelSelection", "Assets/Audio/SFX/cancel_selection.ogg");
 	AudioManager::AddSound("CursorSelection", "Assets/Audio/SFX/cursor_selection.ogg");
 	AudioManager::AddSound("ErrorSelection", "Assets/Audio/SFX/error_selection.ogg");
-
-	AudioManager::AddMusic("MusicAmbiant_HOM", "Assets/Audio/Musics/MusicAmbiant_Hommage.ogg");
 }
 
 void SceneMainMenu::Create()
@@ -45,8 +45,18 @@ void SceneMainMenu::Create()
 
 void SceneMainMenu::Delete()
 {
-	AudioManager::StopMusic();
 	Scene::Delete();
+	AudioManager::StopMusic();
+	AssetManager::DeleteAsset("BackgroundMainMenu");
+	AssetManager::DeleteAsset("ButtonsMenu");
+	AssetManager::DeleteAsset("ButtonGrey");
+	AudioManager::DeleteMusic("MusicAmbiant_HOM");
+
+	AudioManager::DeleteSound("ConfirmSelection");
+	AudioManager::DeleteSound("CancelSelection");
+	AudioManager::DeleteSound("CursorSelection");
+	AudioManager::DeleteSound("ErrorSelection");
+
 }
 
 
@@ -57,29 +67,30 @@ void SceneMainMenu::Render(sf::RenderWindow* _window)
 
 void SceneMainMenu::CreateSceneButtonsMenu()
 {
+	//Size Window
 	float widthScreen = WindowManager::GetFloatWindowWidth();
 	float heightScreen = WindowManager::GetFloatWindowHeight();
+
+	//Main menu buttons
 	playButton = BuilderGameObject::CreateButtonGameObject("play", widthScreen / 2, heightScreen / 2.1, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
 	worldButton = BuilderGameObject::CreateButtonGameObject("playBoss", widthScreen / 2, heightScreen / 1.6, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),30);
 	optionsButton = BuilderGameObject::CreateButtonGameObject("settings", widthScreen / 2, heightScreen / 1.3, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),40);
 	quitButton = BuilderGameObject::CreateButtonGameObject("quit", widthScreen / 2, heightScreen / 1.1, 0.8f, 0.8f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"),40);
-
-	//successButton = BuilderGameObject::CreateButtonGameObject("Success", widthScreen / 1.2, heightScreen / 10, 18);
-	//rankButton = BuilderGameObject::CreateButtonGameObject("Rank", widthScreen / 1.3, heightScreen / 10, 18);
-	//creditsButton = BuilderGameObject::CreateButtonGameObject("Credits", widthScreen / 1.1, heightScreen / 10, 18);
 	
+	//Menu Options Buttons
 	backButton = BuilderGameObject::CreateButtonGameObject("back", widthScreen / 10, heightScreen / 10, 0.5f, 0.5f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
 	englishButton = BuilderGameObject::CreateButtonGameObject("englishButton", widthScreen / 2.4, heightScreen / 1.2, 0.5f, 0.5f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
 	frenchButton = BuilderGameObject::CreateButtonGameObject("frenchButton", widthScreen / 1.7, heightScreen / 1.2, 0.5f, 0.5f, 0, 0, 1, 3, AssetManager::GetAsset("ButtonsMenu"), 40);
 	sliderFPS = BuilderGameObject::CreateSliderGameObject("slider Fps", widthScreen / 2, heightScreen / 2, 1200, 40, 50, 50, 20, WindowManager::GetFps(), WindowManager::GetMinFps(), WindowManager::GetMaxFps());
 	sliderVolume = BuilderGameObject::CreateSliderGameObject("slider Volume", widthScreen / 2, heightScreen / 1.5, 1200, 40, 50, 50, 20, AudioManager::GetVolume(), AudioManager::GetMaxVolume());
-	//signupLoginButton = CreateButtonGameObject("Signup Login", widthScreen / 1.2, heightScreen / 1.2, 30)
+
 	CameraManager::SetCenter(widthScreen / 2, heightScreen / 2);
 }
 
 void SceneMainMenu::Update(const float& _delta)
 {
 	Scene::Update(_delta);
+	//RunScene
 	if (isFadeIn)
 	{
 		playButton->SetActive(false);

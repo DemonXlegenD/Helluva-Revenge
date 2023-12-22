@@ -85,6 +85,7 @@ public:
 	static bool IsRight(const RigidBody2D& _rigidBody2DA, const RigidBody2D& _rigidBody2DB);
 	static bool IsBelow(const RigidBody2D& _rigidBody2DA, const RigidBody2D& _rigidBody2DB);
 
+	void SetShow(bool _state) { show = _state; }
 private:
 	float mass = 1.0f;
 	float gravityScale = 1.f;
@@ -92,6 +93,8 @@ private:
 	Maths::Vector2f velocity;
 	Maths::Vector2f gravity;
 	bool isAffectedByGravity;
+
+	bool show = false;
 
 	Maths::Vector2f killImperfection = Maths::Vector2f::Zero;
 	float widthSquareCollider = 1.0f;

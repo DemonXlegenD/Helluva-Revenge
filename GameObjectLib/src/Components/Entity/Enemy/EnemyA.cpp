@@ -1,6 +1,6 @@
 #include "Components/Entity/Enemy/EnemyA.h"
 #include "Managers/SceneManager.h"
-#include "Scenes/ScenesGame/SceneGameWorld.h"
+#include "Managers/AssetManager.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
 #include "Components/RigidBody2D.h"
 
@@ -24,7 +24,7 @@ void EnemyA::Update(const float& _delta)
 {
 	Entity::Update(_delta);
 
-	if (SceneGameWorld::GetFlip())
+	/*if (SceneGameWorld::GetFlip())
 	{
 
 		SetDirection(Left);
@@ -35,7 +35,7 @@ void EnemyA::Update(const float& _delta)
 
 		SetDirection(Right);
 		directionEnemy = false;
-	}
+	}*/
 
 	if (!this->GetAnimation("shoot")->GetIsPlaying() && !this->GetAnimation("idle")->GetIsPlaying()) this->GetAnimation("idle")->Play();
 

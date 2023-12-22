@@ -1,6 +1,8 @@
 #pragma once
 #include "Scene.h"
 
+#include "Components/UIElements/ATH.h"
+
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics.hpp>
 

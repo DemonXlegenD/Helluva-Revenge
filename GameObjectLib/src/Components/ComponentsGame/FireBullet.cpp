@@ -1,17 +1,16 @@
 #include "Components/ComponentsGame/FireBullet.h"
-#include "Scenes/ScenesGame/SceneGameWorld.h"
 #include "BuildersGameObject/BuilderEntityGameObject.h"
 
 FireBullet::FireBullet()
 {
-	directionFireBullet = false;
 	direction = Direction::Right;
 }
+
 
 void FireBullet::Update(const float& _delta)
 {
 	Component::Update(_delta);
-	if (SceneGameWorld::GetFlip())
+	/*if (SceneGameWorld::GetFlip())
 	{
 		SetDirection(Left);
 		directionFireBullet = true;
@@ -21,7 +20,7 @@ void FireBullet::Update(const float& _delta)
 		SetDirection(Right);
 		directionFireBullet = false;
 
-	}
+	}*/
 };
 
 void FireBullet::AddAnimation(const std::string& _name, Animation* animation)

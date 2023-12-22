@@ -3,7 +3,7 @@
 #include <list>
 #include <memory>
 
-float AudioManager::volume = 50.f;
+float AudioManager::volume = 100.f;
 float AudioManager::maxVolume = 100.f;
 sf::Music* AudioManager::music = nullptr;
 sf::Sound* AudioManager::sound = nullptr;
@@ -40,7 +40,7 @@ void AudioManager::SetVolume(float _volume)
 }
 
 
-void AudioManager::PlayMusic(const std::string& _key) 
+void AudioManager::PlayMusic(const std::string& _key)
 {
 	if (AudioManager::musics.find(_key) != AudioManager::musics.end())
 	{
@@ -114,6 +114,34 @@ void AudioManager::AddSound(const std::string& _key, const std::string& _fileNam
 	}
 }
 
+void AudioManager::DeleteMusic(const std::string& _key)
+{
+	auto musicIterator = AudioManager::musics.find(_key);
+	if (musicIterator != AudioManager::musics.end())
+	{
+		if (musicIterator->second == AudioManager::music) AudioManager::music = nullptr;
+
+		delete musicIterator->second;
+		AudioManager::musics.erase(musicIterator);
+	}
+}
+
+void AudioManager::DeleteSound(const std::string& _key)
+{
+	auto soundIteratorBuffer = AudioManager::soundBuffers.find(_key);
+	auto soundIterator = AudioManager::sounds.find(_key);
+	if (soundIteratorBuffer != AudioManager::soundBuffers.end())
+	{
+		delete soundIteratorBuffer->second;
+		AudioManager::soundBuffers.erase(soundIteratorBuffer);
+	}
+	if (soundIterator != AudioManager::sounds.end())
+	{
+		delete soundIterator->second;
+		AudioManager::sounds.erase(soundIterator);
+	}
+}
+
 void AudioManager::PauseMusic()
 {
 	if (AudioManager::music) {
@@ -136,15 +164,15 @@ void AudioManager::StopMusic()
 }
 
 
-AudioManager::~AudioManager() 
+AudioManager::~AudioManager()
 {
 	delete  AudioManager::music;
 	delete  AudioManager::sound;
-	for (auto& music : AudioManager::musics) 
+	for (auto& music : AudioManager::musics)
 	{
 		delete music.second;
 	}
-	for (auto& sound : AudioManager::sounds) 
+	for (auto& sound : AudioManager::sounds)
 	{
 		delete sound.second;
 	}

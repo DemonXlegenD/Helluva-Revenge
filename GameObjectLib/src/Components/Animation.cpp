@@ -1,6 +1,8 @@
 #include "Components/Animation.h"
 #include <iostream>
 
+
+
 void Animation::Play()
 {
 	if (!isPlaying) {

@@ -12,10 +12,17 @@
 #include "Components/ComponentsGame/Gun.h"
 #include "Components/ComponentsGame/Bullet.h"
 #include "Components/SquareCollider.h"
+#include "Components/UIElements/Text.h"
 
 #include <nlohmann/json.hpp>
 
 SceneGameBossRoom::SceneGameBossRoom() : SceneGameAbstract("SceneGameBossRoom") {}
+
+SceneGameBossRoom::~SceneGameBossRoom()  
+{
+	delete plateforme;
+}
+
 SceneGameBossRoom::SceneGameBossRoom(const std::string& _name) : SceneGameAbstract(_name) {}
 
 void SceneGameBossRoom::Awake()
@@ -57,8 +64,6 @@ void SceneGameBossRoom::Create()
 	plateforme->SetVisible(false);
 	CreatePlayer(WindowManager::GetFloatWindowWidth() / 1.1, WindowManager::GetFloatWindowHeight() / 1.2);
 	player->GetComponent<Character>()->SetCenterCamera(false);
-
-	hud = new ATH(player->GetComponent<Character>(), player->GetComponent<Character>()->GetMaxHealthPoint());
 
 	hades = BuilderEntityGameObject::CreateHadesGameObject("Hades", WindowManager::GetFloatWindowWidth() / 6.f, WindowManager::GetFloatWindowHeight() / 1.5f, 2.5f, 2.5f, AssetManager::GetAsset("idleHades"));
 	victoryTime = 5.f;
@@ -136,11 +141,52 @@ void SceneGameBossRoom::Update(const float& _delta)
 				}
 			}
 		}
-		if (hades->GetComponent<Hades>()->GetHealthPoint() == 0)
+		if (player->GetPosition().GetY() > 2000)
+		{
+			player->GetComponent<Character>()->SetHealthPoint(0);
+		}
+		if (player->GetComponent<Character>()->GetHealthPoint() == 0 && !textActive)
+		{
+			textActive = true;
+			textDialogue = BuilderGameObject::CreateTextDialogueGameObject(
+				"Hades",
+				"Aaaaaaaaahhhhhhhh!",
+				WindowManager::GetFloatWindowWidth() / 2,
+				WindowManager::GetFloatWindowHeight() / 1.1,
+				WindowManager::GetFloatWindowWidth() / 1.2,
+				WindowManager::GetFloatWindowHeight() / 6,
+				20,
+				sf::Text::Regular,
+				sf::Color::White
+			);
+
+			textDialogue->GetComponent<Text>()->LoadTextFromFile("Assets/Texts/" + language + "/HadesWin.txt");
+
+		}
+		if (hades->GetComponent<Hades>()->GetHealthPoint() == 0 && !textActive)
+		{
+			hades->SetVisible(true);
+			textActive = true;
+			textDialogue = BuilderGameObject::CreateTextDialogueGameObject(
+				"Hades",
+				"Aaaaaaaaahhhhhhhh!",
+				WindowManager::GetFloatWindowWidth() / 2,
+				WindowManager::GetFloatWindowHeight() / 1.1,
+				WindowManager::GetFloatWindowWidth() / 1.2,
+				WindowManager::GetFloatWindowHeight() / 6,
+				20,
+				sf::Text::Regular,
+				sf::Color::White
+			);
+
+			textDialogue->GetComponent<Text>()->LoadTextFromFile("Assets/Texts/" + language + "/HadesDie.txt");
+			
+
+		}
+		if (textDialogue && !textDialogue->GetActive())
 		{
 			if (victoryTime <= 0.f)
 			{
-				std::cout << "victory";
 				SceneManager::RunScene("SceneMainMenu");
 			}
 			victoryTime -= _delta;
@@ -151,7 +197,4 @@ void SceneGameBossRoom::Update(const float& _delta)
 void SceneGameBossRoom::Render(sf::RenderWindow* _window)
 {
 	SceneGameAbstract::Render(_window);
-	if (hud) {
-		hud->Render(*_window);
-	}
 }

@@ -9,8 +9,16 @@ ProtectionBall::ProtectionBall() : Entity()
 	player = SceneManager::GetActiveGameScene()->GetPlayer();
 	hades = SceneManager::GetActiveGameScene()->GetHades();
 }
+
+ProtectionBall::~ProtectionBall()
+{
+}
   
-ProtectionBall::ProtectionBall(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range) : Entity(_hp, _damage, _speed, _attackSpeed, _range) {}
+ProtectionBall::ProtectionBall(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range) : Entity(_hp, _damage, _speed, _attackSpeed, _range) 
+{
+	player = SceneManager::GetActiveGameScene()->GetPlayer();
+	hades = SceneManager::GetActiveGameScene()->GetHades();
+}
 
 void ProtectionBall::Update(const float& _delta)
 {
@@ -32,12 +40,10 @@ void ProtectionBall::CreateBouleFeu()
 
 void ProtectionBall::CollisionFireBall()
 {
-	if (player, circle) {
-		std::cout << "debug\n";
+	if (player && circle) {
 		if (RigidBody2D::IsColliding(*(player->GetComponent<RigidBody2D>()), *(circle->GetComponent<RigidBody2D>())))
 		{
-			// enelver des PV au joueur;
-			std::cout << "Cirlce en collision\n";
+			player->GetComponent<Character>()->TakeDamage(100);
 		}
 	}
 }

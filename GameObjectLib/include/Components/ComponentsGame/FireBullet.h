@@ -8,6 +8,7 @@ public:
 	enum Direction { Left, Right };
 
 	FireBullet();
+
 	void Update(const float& _delta) override;
 
 	inline void SetSpeed(const float& _speed) { speed = _speed; }
@@ -26,7 +27,6 @@ private:
 	float speed = 330.f;
 	std::map<std::string, Animation*> animations;
 	Animation* actualAnimation = nullptr;
-	bool directionFireBullet;
 	Direction direction;
 };
 

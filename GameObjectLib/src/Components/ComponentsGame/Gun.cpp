@@ -17,6 +17,7 @@ Gun::Gun() {
 	activeReload = 0.f;
 }
 
+
 void Gun::Update(const float& _delta) {
 	Weapon::Update(_delta);
 
@@ -34,11 +35,33 @@ void Gun::Update(const float& _delta) {
 
 void Gun::Attack() {
 	Weapon::Attack();
-
+	GameObject* player = SceneManager::GetActiveGameScene()->GetPlayer();
+	Character* character = player->GetComponent<Character>();
+	if (!underCooldown)
+	{
+		if (!character->GetAnimation("shootArm")->GetIsPlaying() && !character->GetAnimation("shootBody")->GetIsPlaying()) {
+			if (character->GetAnimation("idle")->GetIsPlaying()) character->GetAnimation("idle")->Stop();
+			if (character->GetAnimation("run")->GetIsPlaying()) character->GetAnimation("run")->Stop();
+			if (character->GetAnimation("jump")->GetIsPlaying()) character->GetAnimation("jump")->Stop();
+			character->GetAnimation("shootBody")->Play();
+			const std::string nameArm = "arm";
+			character->GetAnimation("shootArm")->Play(nameArm);
+		}
+	}
+	else
+	{
+		if (character->GetAnimation("shootBody")->GetIsPlaying()) character->GetAndSetAnimation("shootBody")->Stop();
+		if (character->GetAnimation("shootArm")->GetIsPlaying()) character->GetAndSetAnimation("shootArm")->Stop();
+		if (!character->GetAnimation("run")->GetIsPlaying())
+		{
+			if (!character->GetAnimation("idle")->GetIsPlaying()) {
+				character->GetAndSetAnimation("idle")->Play();
+			}
+		}
+	}
 	if (mag > 0 && cooldown <= 0 && activeReload <= 0) {
 		cooldown = fireRate;
 		sf::RenderWindow* window = WindowManager::GetWindow();
-		GameObject* player = SceneManager::GetActiveGameScene()->GetPlayer();
 		RigidBody2D* rigidBody2D = player->GetComponent<RigidBody2D>();
 		const sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
 		const sf::Vector2f worldMousePosition = window->mapPixelToCoords(mousePosition);
@@ -95,9 +118,4 @@ void Gun::Render(sf::RenderWindow* _window) {
 void Gun::ClearBullets()
 {
 	bullets.clear();
-}
-
-Gun::~Gun() {
-	delete texture;
-	this->ClearBullets();
 }

@@ -2,6 +2,7 @@
 #include "Managers/WindowManager.h"
 #include "Managers/CameraManager.h"
 #include "Managers/LanguageManager.h"
+#include "Managers/AudioManager.h"
 #include "BuilderGameObject.h"
 
 #include <iostream>
@@ -13,7 +14,7 @@ Scene::Scene(const std::string& _name)
 //Initialize the scene
 void Scene::Preload() 
 {
-	
+
 }
 
 //Create Object from the scene
@@ -74,7 +75,7 @@ void Scene::Delete()
 {
 	for (GameObject* const& gameObject : this->gameObjects)
 	{
-		delete gameObject;
+		if(gameObject) delete gameObject;
 	}
 	gameObjects.clear();
 }
@@ -100,9 +101,12 @@ void Scene::Update(const float& _delta)
 
 void Scene::Physics(const float& _delta)
 {
-	for (GameObject* const& gameObject : gameObjects)
+	if (isActive)
 	{
-		gameObject->Physics(_delta);
+		for (GameObject* const& gameObject : gameObjects)
+		{
+			gameObject->Physics(_delta);
+		}
 	}
 }
 

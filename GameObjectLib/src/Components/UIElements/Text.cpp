@@ -155,4 +155,7 @@ void Text::Update(const float& _delta)
 	currentTime += _delta;
 }
 
-Text::~Text() {}
+Text::~Text() 
+{
+	finalTexts.clear();
+}

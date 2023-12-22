@@ -15,6 +15,19 @@ void SceneOpening::Preload()
     AssetManager::AddAsset("Warning", "Assets/Graphics/UI/Icons/warning_content.jpg");
 }
 
+void SceneOpening::Delete()
+{
+    Scene::Delete();
+    for (sf::Sprite* sprite : sprites)
+    {
+        if (sprite) delete sprite;
+    }
+    sprites.clear();
+    AssetManager::DeleteAsset("HelluvaStudioLogo");
+    AssetManager::DeleteAsset("HellEngine");
+    AssetManager::DeleteAsset("Warning");
+}
+
 void SceneOpening::Create() 
 {
     Scene::Create();
@@ -52,18 +65,6 @@ void SceneOpening::Create()
     progressBar.setFillColor(sf::Color::Green);
 }
 
-void SceneOpening::Delete()
-{
-	Scene::Delete();
-    for (sf::Sprite* sprite : sprites)
-    {
-        if (sprite) delete sprite;
-    }
-    sprites.clear();
-    AssetManager::DeleteAsset("HelluvaStudioLogo");
-    AssetManager::DeleteAsset("HellEngine");
-    AssetManager::DeleteAsset("Warning");
-}
 
 void SceneOpening::Awake()
 {
@@ -102,7 +103,6 @@ void SceneOpening::Update(const float& _delta)
     }
     else
     {
-        Delete();
         SceneManager::RunScene("SceneMainMenu");
     }
 
@@ -112,7 +112,6 @@ void SceneOpening::Update(const float& _delta)
         progressBarFill += fillRate * _delta;
         if (progressBarFill > 1.0f) {
             progressBarFill = 1.0f;
-            Delete();
             SceneManager::RunScene("SceneMainMenu");
             return;
         }

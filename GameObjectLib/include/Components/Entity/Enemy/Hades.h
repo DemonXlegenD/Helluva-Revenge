@@ -17,6 +17,8 @@ public:
 	Hades();
 	Hades(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range);
 
+	~Hades();
+
 	void SetProtection(const float& _delta);
 	void SetDirection();
 
@@ -27,6 +29,21 @@ public:
 	void ManageAttack(const float& _delta);
 	void AllerRetourHorse(bool _nightmareArrive, const float& _delta);
 	void DamageZoneHades(const float& _delta);
+
+	void Die() override
+	{
+		Entity::Die();
+		protection->SetActiveAndVisible(false);
+		attackFire->SetActiveAndVisible(false);
+		nightmare->SetActiveAndVisible(false);
+		damageZone->SetActiveAndVisible(false);
+		for (GameObject* ball : balls)
+		{
+			ball->SetActiveAndVisible(false);
+		}
+		GetOwner()->SetActiveAndVisible(true);
+	}
+
 
 	void Update(const float& _delta) override;
 
@@ -43,24 +60,32 @@ public:
 private:
 	State state = Idle;
 	Step step = Step1;
+
 	GameObject* protection = nullptr;
 	GameObject* nightmare = nullptr;
-	GameObject* attackFire;
-	GameObject* damageZone;
-	GameObject* player = nullptr;;
+	GameObject* attackFire = nullptr;
+	GameObject* damageZone = nullptr;
+	GameObject* player = nullptr;
 	std::vector<GameObject*> balls;
+
+
+
 	float timeSpawnBalls = 10.f;
 	float actualTime = 10.f;
 
+	
+	float randX = 0.f;
+	float randY = 0.f;
+
 	float cooldown = 10.0f;
-	float randX;
-	float randY;
 	float cooldownAttackFeu = 1.0f;
 	float cooldownDamageZone = 2.0f;
 	float cooldownAttackHorse = 0.15f;
 	float cooldoawnRoar = 3.0f;
 	float cooldoawnAttack = 5.0f;
+
 	const float speed = 350.0f;
+
 	int randomAttackCheval = 0;
 	int newRandomAttackCheval;
 	int randomAttackFeu = 0;

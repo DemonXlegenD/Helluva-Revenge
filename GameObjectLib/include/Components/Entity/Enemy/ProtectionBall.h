@@ -7,6 +7,7 @@ class ProtectionBall : public Entity
 public:
 
 	ProtectionBall();
+	~ProtectionBall();
 	ProtectionBall(const int& _hp, const int& _damage, const float& _speed, const float& _attackSpeed, const float& _range);
 
 	void SetHades(GameObject* _hades) { hades = _hades; }
@@ -28,13 +29,12 @@ public:
 private:
 	GameObject* hades = nullptr;
 	GameObject* player = nullptr;
-
 	GameObject* area = nullptr;
+	GameObject* circle = nullptr;
+
+	Maths::Vector2f positionFireCircle;
 	Maths::Vector2f position;
 
-
-	GameObject* circle;
-	Maths::Vector2f positionFireCircle;
 	bool activeCollision = false;
 
 	int spawn = 0;

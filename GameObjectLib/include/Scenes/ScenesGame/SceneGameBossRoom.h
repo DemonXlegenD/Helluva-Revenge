@@ -1,11 +1,11 @@
 #pragma once
 #include "Scenes/SceneGameAbstract.h"
-#include "Components/UIElements/ATH.h"
 
 class SceneGameBossRoom final : public SceneGameAbstract
 {
 public:
 	SceneGameBossRoom();
+	~SceneGameBossRoom();
 	SceneGameBossRoom(const std::string& _name);
 	void Awake() override;
 	void Create() override;
@@ -20,7 +20,9 @@ public:
 
 private:
 	GameObject* plateforme = nullptr;
-	float victoryTime = 5.f;
-	ATH* hud;
+	GameObject* textDialogue = nullptr;
+	float victoryTime = 3.f;
+
+	bool textActive = false;
 };
 
