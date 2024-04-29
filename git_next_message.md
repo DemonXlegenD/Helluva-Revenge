@@ -1,3 +1,4 @@
-NEW : Ajout d'un skip
+FIX : Propriétés
 
-- Ajout d'un skip pour les dialogues du spawn
+- fix des propriétés du projet
+- ajout dees copies des Assets et openal32.Dll
