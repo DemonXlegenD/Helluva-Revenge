@@ -137,7 +137,8 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy /E /I /Y "$(ProjectDir)Assets" "$(TargetDir)Assets"
-xcopy "$(ProjectDir)openal32.dll" "$(TargetDir)"</Command>
+
+xcopy /Y "$(ProjectDir)openal32.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -160,7 +161,8 @@ xcopy "$(ProjectDir)openal32.dll" "$(TargetDir)"</Command>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /E /I /Y "$(ProjectDir)Assets" "$(TargetDir)Assets"
-xcopy "$(ProjectDir)openal32.dll" "$(TargetDir)"</Command>
+
+xcopy /Y "$(ProjectDir)openal32.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
